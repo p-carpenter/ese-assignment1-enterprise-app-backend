@@ -1,12 +1,77 @@
-from rest_framework import viewsets, permissions
-from .models import Song
-from .serialisers import SongSerializer
+from rest_framework import viewsets, permissions, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django.db.models import Q
+from .models import Song, Playlist, PlaylistSong, PlayLog, Profile
+from .serialisers import (
+    SongSerialiser, 
+    PlaylistSerialiser, 
+    PlaylistSongSerialiser, 
+    PlayLogSerialiser,
+    ProfileSerialiser
+)
 
+# 1. Profile View (For viewing/editing own avatar/bio)
+class ProfileViewSet(viewsets.ModelViewSet):
+    serializer_class = ProfileSerialiser
+    permission_classes = [permissions.IsAuthenticated]
+    # Only allow reading and updating
+    http_method_names = ['get', 'patch']
+
+    def get_queryset(self):
+        # Users can only see/edit their own profile in this specific view
+        return Profile.objects.filter(user=self.request.user)
+
+# Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
-    serializer_class = SongSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly] # Security Requirement
+    serializer_class = SongSerialiser
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
-        # Automatically set the uploader to the current user
         serializer.save(uploaded_by=self.request.user)
+
+# Playlist View
+class PlaylistViewSet(viewsets.ModelViewSet):
+    serializer_class = PlaylistSerialiser
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        # Users see their own playlists or public playlists
+        user = self.request.user
+        return Playlist.objects.filter(Q(owner=user) | Q(is_public=True))
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    # Custom Action: POST /api/playlists/{id}/add_song/
+    @action(detail=True, methods=['post'])
+    def add_song(self, request, pk=None):
+        playlist = self.get_object()
+        
+        # Security Check: Only the owner can add songs
+        if playlist.owner != request.user:
+            return Response(
+                {"detail": "You do not have permission to edit this playlist."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Pass data to the serialiser (expects 'song_id' and 'order')
+        serializer = PlaylistSongSerialiser(data=request.data)
+        if serializer.is_valid():
+            serializer.save(playlist=playlist)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Audit Log View (For History)
+class PlayLogViewSet(viewsets.ModelViewSet):
+    serializer_class = PlayLogSerialiser
+    permission_classes = [permissions.IsAuthenticated]
+    http_method_names = ['get', 'post'] # No updating/deleting history
+
+    def get_queryset(self):
+        # Users only see their own history
+        return PlayLog.objects.filter(user=self.request.user).order_by('-played_at')
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
