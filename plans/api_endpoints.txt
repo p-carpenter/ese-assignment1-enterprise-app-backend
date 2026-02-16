@@ -1,0 +1,25 @@
+Authentication & Users
+POST /api/auth/register/ - Create a new user.
+POST /api/auth/login/ - Authenticate and return the JWT token.
+GET /api/auth/me/ - Return the profile details of the currently authenticated user (derived from the JWT token, no ID needed in the URL).
+PUT /api/auth/me/ - Update the current user's profile (this is where the avatar upload happens, using the same internal Cloudinary Python function as the songs).
+
+Songs (Domain CRUD)
+GET /api/songs/ - List songs. Supports queries like ?search=taylor or ?genre=pop.
+GET /api/songs/<id>/ - Retrieve a specific song.
+POST /api/songs/ - Upload a new song.
+DELETE /api/songs/<id>/ - Soft delete a song.
+
+Playlists (Domain CRUD)
+GET /api/playlists/ - List playlists (filter by ?owner=me or ?is_public=true).
+POST /api/playlists/ - Create a new empty playlist.
+GET /api/playlists/<id>/ - Retrieve playlist details, including the ordered array of songs.
+DELETE /api/playlists/<id>/ - Delete a playlist.
+
+Playlist Songs (The Many-to-Many Relationship)
+POST /api/playlists/<id>/songs/ - Add a song. The JSON payload should look like {"song_id": 12, "order": 1}.
+DELETE /api/playlists/<id>/songs/<song_id>/ - Remove a specific song from a specific playlist.
+
+Audit Log
+POST /api/history/ - Log a play. Frontend calls this when a song starts playing.
+GET /api/history/ - "Recently Played". Returns the user's last 50 songs.

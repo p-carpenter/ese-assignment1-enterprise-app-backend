@@ -1,0 +1,40 @@
+User (Extends AbstractUser)
+- id (PK)
+- username (String)
+- email (String)
+
+Profile
+user (OneToOneField)
+display_name (String)
+avatar_url (String)
+
+Song
+id (PK)
+title (String)
+artist (String)
+album (String)
+file_url (String)
+cover_art_url (String)
+duration (Integer)
+uploaded_by (FK -> User)
+uploaded_at (DateTime)
+is_active (bool) (Soft Delete)
+
+Playlist
+id (PK)
+title (String)
+owner (FK -> User)
+is_public (bool) (Visibility logic)
+
+PlaylistSong (Through)
+id (PK)
+playlist (FK)
+song (FK)
+order
+added_at (DateTime)
+
+PlayLog (Audit)
+id (PK)
+user (FK)
+song (FK)
+played_at (DateTime)
