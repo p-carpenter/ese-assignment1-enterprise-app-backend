@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import Song, Playlist, PlaylistSong, PlayLog, Profile
 from .serialisers import (
@@ -11,7 +12,7 @@ from .serialisers import (
     ProfileSerialiser
 )
 
-# 1. Profile View (For viewing/editing own avatar/bio)
+# Profile View (For viewing/editing own avatar/bio)
 class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerialiser
     permission_classes = [permissions.IsAuthenticated]
@@ -26,10 +27,20 @@ class ProfileViewSet(viewsets.ModelViewSet):
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerialiser
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # Commenting out so I can test uploading without auth
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.AllowAny] # Temporary for testing
 
     def perform_create(self, serializer):
-        serializer.save(uploaded_by=self.request.user)
+            user = self.request.user
+            
+            # If user is not logged in, assign to the first admin found
+            if not user.is_authenticated:
+                user = User.objects.first() 
+                if not user:
+                    raise ValueError("No users found! Run 'python manage.py createsuperuser' first.")
+                    
+            serializer.save(uploaded_by=user)
 
 # Playlist View
 class PlaylistViewSet(viewsets.ModelViewSet):
@@ -49,7 +60,6 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     def add_song(self, request, pk=None):
         playlist = self.get_object()
         
-        # Security Check: Only the owner can add songs
         if playlist.owner != request.user:
             return Response(
                 {"detail": "You do not have permission to edit this playlist."}, 
