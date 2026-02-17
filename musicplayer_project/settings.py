@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account', 
     'dj_rest_auth.registration',
+    "anymail", # For email verification
 ]
 
 MIDDLEWARE = [
@@ -170,6 +171,14 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = 'none' # Or 'none' for no verification, 'optional' for optional verification
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # Or 'none' for no verification, 'optional' for optional verification
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True  # No need to sent POST request to confirmation link
 LOGIN_URL = "/admin" # Path users will be redirected to after email verification/if not authenticated
+
+# Email backend
+ANYMAIL = {
+    "SENDGRID_API_KEY": os.getenv('SENDGRID_API_KEY'),
+}
+EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
+DEFAULT_FROM_EMAIL = "musicplayer_noreply@proton.me"  # if you don't already have this in settings
+SERVER_EMAIL = "musicplayer_noreply@proton.me"  # ditto (default from-email for Django errors)
