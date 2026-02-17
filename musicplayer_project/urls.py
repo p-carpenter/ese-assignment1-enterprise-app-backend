@@ -15,9 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from allauth.account.views import ConfirmEmailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('musicplayer.urls')), # This makes the endpoint /api/songs/
+    path('api/auth/', include('dj_rest_auth.urls')), # This includes login/logout/password reset endpoints
+    re_path(
+    "^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
+    ConfirmEmailView.as_view(),
+    name="account_confirm_email",
+),
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')), # This includes the registration endpoint
 ]
