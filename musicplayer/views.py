@@ -3,6 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.db.models import Q
+from .permissions import IsOwnerOrReadOnly
 from .models import Song, Playlist, PlaylistSong, PlayLog
 from .serialisers import (
     SongSerialiser, 
@@ -16,25 +17,17 @@ from .serialisers import (
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerialiser
-    # Commenting out so I can test uploading without auth
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    permission_classes = [permissions.AllowAny] # Temporary for testing
+    permission_classes = [permissions.IsAuthenticated,
+                          IsOwnerOrReadOnly] # must be owner to edit/delete, but anyone can read
 
     def perform_create(self, serializer):
-            user = self.request.user
-            
-            # If user is not logged in, assign to the first admin found
-            if not user.is_authenticated:
-                user = User.objects.first() 
-                if not user:
-                    raise ValueError("No users found! Run 'python manage.py createsuperuser' first.")
-                    
-            serializer.save(uploaded_by=user)
+        serializer.save(uploaded_by=self.request.user)
 
 # Playlist View
 class PlaylistViewSet(viewsets.ModelViewSet):
     serializer_class = PlaylistSerialiser
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,
+                          IsOwnerOrReadOnly]
 
     def get_queryset(self):
         # Users see their own playlists or public playlists
