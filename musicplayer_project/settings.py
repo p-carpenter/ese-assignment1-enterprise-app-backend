@@ -141,6 +141,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
+deployed_frontend = os.environ.get("RENDER_FRONTEND_URL")
+if deployed_frontend:
+    CORS_ALLOWED_ORIGINS.append(deployed_frontend)
 
 # Auth settings
 REST_FRAMEWORK = {
