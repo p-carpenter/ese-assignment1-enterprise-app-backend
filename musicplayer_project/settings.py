@@ -14,6 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 from datetime import timedelta
+import dj_database_url
 
 # Load environment variables from .env file
 load_dotenv()
@@ -30,6 +31,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False')
 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+hostname = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if hostname:
+    ALLOWED_HOSTS.append(hostname)
 # Application definition
 
 INSTALLED_APPS = [
@@ -91,14 +96,7 @@ WSGI_APPLICATION = 'musicplayer_project.wsgi.application'
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_ACCOUNT_USERNAME'),
-        'PASSWORD': os.getenv('DATABASE_ACCOUNT_PASSWORD'),
-        'HOST': os.getenv('DATABASE_ACCOUNT_HOST'),
-        'PORT': os.getenv('DATABASE_ACCOUNT_PORT', 5432),  # Default PostgreSQL port
-    }
+    "default": dj_database_url.config(default="sqlite:///db.sqlite3", conn_max_age=600)
 }
 
 
@@ -143,7 +141,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Auth settings
 REST_FRAMEWORK = {
