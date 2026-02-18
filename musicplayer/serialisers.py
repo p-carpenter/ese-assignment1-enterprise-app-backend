@@ -1,18 +1,13 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
-from .models import Song, Playlist, PlaylistSong, Profile, PlayLog
+from django.contrib.auth import get_user_model
+from .models import Song, Playlist, PlaylistSong, PlayLog
 
-class ProfileSerialiser(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['display_name', 'avatar_url']
-
-class UserSerialiser(serializers.ModelSerializer):
-    profile = ProfileSerialiser(read_only=True) 
-    
+User = get_user_model()
+class CustomUserSerialiser(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'profile']
+        fields = ['id', 'username', 'email', 'password','avatar_url']
+        read_only_fields = ['email']
 
 class SongSerialiser(serializers.ModelSerializer):
     class Meta:

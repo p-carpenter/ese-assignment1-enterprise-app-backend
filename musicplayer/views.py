@@ -3,25 +3,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.db.models import Q
-from .models import Song, Playlist, PlaylistSong, PlayLog, Profile
+from .models import Song, Playlist, PlaylistSong, PlayLog
 from .serialisers import (
     SongSerialiser, 
     PlaylistSerialiser, 
     PlaylistSongSerialiser, 
     PlayLogSerialiser,
-    ProfileSerialiser
 )
 
-# Profile View (For viewing/editing own avatar/bio)
-class ProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = ProfileSerialiser
-    permission_classes = [permissions.IsAuthenticated]
-    # Only allow reading and updating
-    http_method_names = ['get', 'patch']
-
-    def get_queryset(self):
-        # Users can only see/edit their own profile in this specific view
-        return Profile.objects.filter(user=self.request.user)
 
 # Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):

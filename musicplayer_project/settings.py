@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     'allauth.account', 
     'dj_rest_auth.registration',
     "anymail", # For email verification
+
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -146,6 +148,8 @@ if deployed_frontend:
     CORS_ALLOWED_ORIGINS.append(deployed_frontend)
 
 # Auth settings
+AUTH_USER_MODEL = 'users.CustomUser'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
@@ -157,6 +161,7 @@ REST_AUTH = {
     'JWT_AUTH_COOKIE': 'musicplayer-auth',
     'JWT_AUTH_REFRESH_COOKIE': 'musicplayer-refresh',
     'JWT_AUTH_HTTPONLY': True,
+    'USER_DETAILS_SERIALIZER': 'musicplayer.serialisers.CustomUserSerialiser',
 }
 
 SIMPLE_JWT = {

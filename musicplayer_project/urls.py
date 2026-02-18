@@ -20,10 +20,10 @@ from allauth.account.views import ConfirmEmailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('musicplayer.urls')), # This makes the endpoint /api/songs/
+    path('api/', include('musicplayer.urls')), 
     path('api/auth/', include('dj_rest_auth.urls')), # This includes login/logout/password reset endpoints
     re_path(
-    "^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
+    r"^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
     ConfirmEmailView.as_view(),
     name="account_confirm_email",
 ),
