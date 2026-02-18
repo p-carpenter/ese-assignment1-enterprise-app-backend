@@ -92,12 +92,12 @@ WSGI_APPLICATION = 'musicplayer_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'musicplayer',
-        'USER': 'poppy',
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_ACCOUNT_USERNAME'),
         'PASSWORD': os.getenv('DATABASE_ACCOUNT_PASSWORD'),
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': os.getenv('DATABASE_ACCOUNT_HOST'),
+        'PORT': os.getenv('DATABASE_ACCOUNT_PORT', 5432),  # Default PostgreSQL port
     }
 }
 
