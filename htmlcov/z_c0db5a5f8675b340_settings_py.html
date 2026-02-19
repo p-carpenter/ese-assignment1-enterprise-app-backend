@@ -54,8 +54,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">48 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">46<span class="text"> run</span></button>
+            <span class="text">49 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">47<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">2<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_c0db5a5f8675b340_test_Settings_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-19 14:14 +0000
+            created at 2026-02-19 22:46 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -229,56 +229,55 @@
     <p class="run"><span class="n"><a id="t147" href="#t147">147</a></span><span class="t"><span class="key">if</span> <span class="nam">deployed_frontend</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t148" href="#t148">148</a></span><span class="t">    <span class="nam">CORS_ALLOWED_ORIGINS</span><span class="op">.</span><span class="nam">append</span><span class="op">(</span><span class="nam">deployed_frontend</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t149" href="#t149">149</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t"><span class="com"># Auth settings</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t"><span class="nam">AUTH_USER_MODEL</span> <span class="op">=</span> <span class="str">"users.CustomUser"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t"><span class="com"># For redirect after password reset</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t"><span class="nam">FRONTEND_URL</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"FRONTEND_URL"</span><span class="op">,</span> <span class="str">"http://localhost:5173"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t152" href="#t152">152</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t"><span class="nam">REST_FRAMEWORK</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">    <span class="str">"DEFAULT_AUTHENTICATION_CLASSES"</span><span class="op">:</span> <span class="op">(</span><span class="str">"dj_rest_auth.jwt_auth.JWTCookieAuthentication"</span><span class="op">,</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t"><span class="nam">REST_AUTH</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">    <span class="str">"USE_JWT"</span><span class="op">:</span> <span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">    <span class="str">"JWT_AUTH_COOKIE"</span><span class="op">:</span> <span class="str">"musicplayer-auth"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">    <span class="str">"JWT_AUTH_REFRESH_COOKIE"</span><span class="op">:</span> <span class="str">"musicplayer-refresh"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">    <span class="str">"JWT_AUTH_HTTPONLY"</span><span class="op">:</span> <span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">    <span class="str">"USER_DETAILS_SERIALIZER"</span><span class="op">:</span> <span class="str">"musicplayer.serialisers.CustomUserSerialiser"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t"><span class="nam">SIMPLE_JWT</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">    <span class="str">"ACCESS_TOKEN_LIFETIME"</span><span class="op">:</span> <span class="nam">timedelta</span><span class="op">(</span><span class="nam">minutes</span><span class="op">=</span><span class="num">30</span><span class="op">)</span><span class="op">,</span>  <span class="com"># Short life for security</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">    <span class="str">"REFRESH_TOKEN_LIFETIME"</span><span class="op">:</span> <span class="nam">timedelta</span><span class="op">(</span><span class="nam">days</span><span class="op">=</span><span class="num">7</span><span class="op">)</span><span class="op">,</span>  <span class="com"># Long life for convenience</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t"><span class="nam">AUTHENTICATION_BACKENDS</span> <span class="op">=</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">    <span class="com"># Needed to login by username in Django admin, regardless of `allauth`</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">    <span class="str">"django.contrib.auth.backends.ModelBackend"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">    <span class="com"># `allauth` specific authentication methods, such as login by email</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">    <span class="str">"allauth.account.auth_backends.AuthenticationBackend"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t"><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t"><span class="com"># Required for django-allauth (used by dj-rest-auth for registration)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t"><span class="nam">SITE_ID</span> <span class="op">=</span> <span class="num">1</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t"><span class="com"># Auth settings</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t"><span class="nam">AUTH_USER_MODEL</span> <span class="op">=</span> <span class="str">"users.CustomUser"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t"><span class="nam">REST_FRAMEWORK</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">    <span class="str">"DEFAULT_AUTHENTICATION_CLASSES"</span><span class="op">:</span> <span class="op">(</span><span class="str">"dj_rest_auth.jwt_auth.JWTCookieAuthentication"</span><span class="op">,</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t"><span class="nam">REST_AUTH</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">    <span class="str">"USE_JWT"</span><span class="op">:</span> <span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">    <span class="str">"JWT_AUTH_COOKIE"</span><span class="op">:</span> <span class="str">"musicplayer-auth"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="str">"JWT_AUTH_REFRESH_COOKIE"</span><span class="op">:</span> <span class="str">"musicplayer-refresh"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">    <span class="str">"JWT_AUTH_HTTPONLY"</span><span class="op">:</span> <span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">    <span class="str">"USER_DETAILS_SERIALIZER"</span><span class="op">:</span> <span class="str">"musicplayer.serialisers.CustomUserSerialiser"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t"><span class="nam">SIMPLE_JWT</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">    <span class="str">"ACCESS_TOKEN_LIFETIME"</span><span class="op">:</span> <span class="nam">timedelta</span><span class="op">(</span><span class="nam">minutes</span><span class="op">=</span><span class="num">30</span><span class="op">)</span><span class="op">,</span>  <span class="com"># Short life for security</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">    <span class="str">"REFRESH_TOKEN_LIFETIME"</span><span class="op">:</span> <span class="nam">timedelta</span><span class="op">(</span><span class="nam">days</span><span class="op">=</span><span class="num">7</span><span class="op">)</span><span class="op">,</span>  <span class="com"># Long life for convenience</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t"><span class="nam">AUTHENTICATION_BACKENDS</span> <span class="op">=</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">    <span class="com"># Needed to login by username in Django admin, regardless of `allauth`</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">    <span class="str">"django.contrib.auth.backends.ModelBackend"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t">    <span class="com"># `allauth` specific authentication methods, such as login by email</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t">    <span class="str">"allauth.account.auth_backends.AuthenticationBackend"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t"><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t"><span class="nam">ACCOUNT_LOGIN_METHODS</span> <span class="op">=</span> <span class="op">{</span><span class="str">'email'</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t"><span class="nam">ACCOUNT_SIGNUP_FIELDS</span> <span class="op">=</span> <span class="op">[</span><span class="str">'username'</span><span class="op">,</span><span class="str">'email*'</span><span class="op">,</span> <span class="str">'password1*'</span><span class="op">,</span> <span class="str">'password2*'</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t182" href="#t182">182</a></span><span class="t"><span class="nam">ACCOUNT_UNIQUE_EMAIL</span> <span class="op">=</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t183" href="#t183">183</a></span><span class="t"><span class="nam">ACCOUNT_EMAIL_VERIFICATION</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t184" href="#t184">184</a></span><span class="t">    <span class="str">"mandatory"</span>  <span class="com"># Or 'none' for no verification, 'optional' for optional verification</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t185" href="#t185">185</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t186" href="#t186">186</a></span><span class="t"><span class="nam">ACCOUNT_CONFIRM_EMAIL_ON_GET</span> <span class="op">=</span> <span class="key">True</span>  <span class="com"># No need to sent POST request to confirmation link</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t187" href="#t187">187</a></span><span class="t"><span class="nam">LOGIN_URL</span> <span class="op">=</span> <span class="str">"/admin"</span>  <span class="com"># Path users will be redirected to after email verification/if not authenticated</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t188" href="#t188">188</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t"><span class="com"># Email backend</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t190" href="#t190">190</a></span><span class="t"><span class="nam">ANYMAIL</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t191" href="#t191">191</a></span><span class="t">    <span class="str">"SENDGRID_API_KEY"</span><span class="op">:</span> <span class="nam">os</span><span class="op">.</span><span class="nam">getenv</span><span class="op">(</span><span class="str">"SENDGRID_API_KEY"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t192" href="#t192">192</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t193" href="#t193">193</a></span><span class="t"><span class="nam">EMAIL_BACKEND</span> <span class="op">=</span> <span class="str">"anymail.backends.sendgrid.EmailBackend"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t194" href="#t194">194</a></span><span class="t"><span class="nam">DEFAULT_FROM_EMAIL</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t195" href="#t195">195</a></span><span class="t">    <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t196" href="#t196">196</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t197" href="#t197">197</a></span><span class="t"><span class="nam">SERVER_EMAIL</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t198" href="#t198">198</a></span><span class="t">    <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t199" href="#t199">199</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t"><span class="com"># Required for django-allauth (used by dj-rest-auth for registration)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t"><span class="nam">SITE_ID</span> <span class="op">=</span> <span class="num">1</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t182" href="#t182">182</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t183" href="#t183">183</a></span><span class="t"><span class="nam">ACCOUNT_LOGIN_METHODS</span> <span class="op">=</span> <span class="op">{</span><span class="str">"email"</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t184" href="#t184">184</a></span><span class="t"><span class="nam">ACCOUNT_SIGNUP_FIELDS</span> <span class="op">=</span> <span class="op">[</span><span class="str">"username"</span><span class="op">,</span> <span class="str">"email*"</span><span class="op">,</span> <span class="str">"password1*"</span><span class="op">,</span> <span class="str">"password2*"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t185" href="#t185">185</a></span><span class="t"><span class="nam">ACCOUNT_UNIQUE_EMAIL</span> <span class="op">=</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t186" href="#t186">186</a></span><span class="t"><span class="nam">ACCOUNT_EMAIL_VERIFICATION</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t187" href="#t187">187</a></span><span class="t">    <span class="str">"mandatory"</span>  <span class="com"># Or 'none' for no verification, 'optional' for optional verification</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t188" href="#t188">188</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t"><span class="nam">ACCOUNT_CONFIRM_EMAIL_ON_GET</span> <span class="op">=</span> <span class="key">True</span>  <span class="com"># No need to sent POST request to confirmation link</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t190" href="#t190">190</a></span><span class="t"><span class="nam">LOGIN_URL</span> <span class="op">=</span> <span class="str">"/admin"</span>  <span class="com"># Path users will be redirected to after email verification/if not authenticated</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t191" href="#t191">191</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t192" href="#t192">192</a></span><span class="t"><span class="com"># Email backend</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t193" href="#t193">193</a></span><span class="t"><span class="nam">ANYMAIL</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t194" href="#t194">194</a></span><span class="t">    <span class="str">"SENDGRID_API_KEY"</span><span class="op">:</span> <span class="nam">os</span><span class="op">.</span><span class="nam">getenv</span><span class="op">(</span><span class="str">"SENDGRID_API_KEY"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t195" href="#t195">195</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t196" href="#t196">196</a></span><span class="t"><span class="nam">EMAIL_BACKEND</span> <span class="op">=</span> <span class="str">"anymail.backends.sendgrid.EmailBackend"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t197" href="#t197">197</a></span><span class="t"><span class="nam">DEFAULT_FROM_EMAIL</span> <span class="op">=</span> <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t198" href="#t198">198</a></span><span class="t"><span class="nam">SERVER_EMAIL</span> <span class="op">=</span> <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -288,7 +287,7 @@
             <a class="nav" href="z_c0db5a5f8675b340_test_Settings_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-19 14:14 +0000
+            created at 2026-02-19 22:46 +0000
         </p>
     </div>
 </footer>

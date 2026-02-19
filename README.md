@@ -17,12 +17,12 @@
 | musicplayer/tests/test\_auth\_integration.py |       20 |        2 |     90% |    28, 39 |
 | musicplayer/tests/test\_permissions.py       |       24 |        3 |     88% |     49-52 |
 | musicplayer/urls.py                          |        8 |        0 |    100% |           |
-| musicplayer/views.py                         |       39 |       14 |     64% |25, 35-36, 39, 44-57, 68, 71 |
+| musicplayer/views.py                         |       45 |       15 |     67% |27, 37-38, 41, 46-59, 70, 73, 81 |
 | musicplayer\_project/\_\_init\_\_.py         |        0 |        0 |    100% |           |
 | musicplayer\_project/asgi.py                 |        4 |        4 |      0% |     10-16 |
-| musicplayer\_project/settings.py             |       48 |        2 |     96% |   37, 148 |
+| musicplayer\_project/settings.py             |       49 |        2 |     96% |   37, 148 |
 | musicplayer\_project/test\_Settings.py       |        4 |        0 |    100% |           |
-| musicplayer\_project/urls.py                 |        4 |        0 |    100% |           |
+| musicplayer\_project/urls.py                 |        5 |        0 |    100% |           |
 | musicplayer\_project/wsgi.py                 |        4 |        4 |      0% |     10-16 |
 | users/\_\_init\_\_.py                        |        0 |        0 |    100% |           |
 | users/admin.py                               |        7 |        0 |    100% |           |
@@ -32,7 +32,7 @@
 | users/models.py                              |        6 |        1 |     83% |        10 |
 | users/tests.py                               |       17 |        0 |    100% |           |
 | users/views.py                               |        0 |        0 |    100% |           |
-| **TOTAL**                                    |  **286** |   **35** | **88%** |           |
+| **TOTAL**                                    |  **294** |   **36** | **88%** |           |
 
 
 ## Setup coverage badge
