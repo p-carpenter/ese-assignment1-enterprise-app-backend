@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,54 +14,124 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Playlist',
+            name="Playlist",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True)),
-                ('is_public', models.BooleanField(default=False)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True)),
+                ("is_public", models.BooleanField(default=False)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Song',
+            name="Song",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('artist', models.CharField(max_length=255)),
-                ('album', models.CharField(blank=True, max_length=255)),
-                ('file_url', models.URLField()),
-                ('cover_art_url', models.URLField(blank=True)),
-                ('duration', models.IntegerField(help_text='Duration in seconds')),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
-                ('uploaded_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("artist", models.CharField(max_length=255)),
+                ("album", models.CharField(blank=True, max_length=255)),
+                ("file_url", models.URLField()),
+                ("cover_art_url", models.URLField(blank=True)),
+                ("duration", models.IntegerField(help_text="Duration in seconds")),
+                ("uploaded_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "uploaded_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='PlayLog',
+            name="PlayLog",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('played_at', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('song', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='musicplayer.song')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("played_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "song",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="musicplayer.song",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='PlaylistSong',
+            name="PlaylistSong",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('order', models.PositiveIntegerField()),
-                ('added_at', models.DateTimeField(auto_now_add=True)),
-                ('playlist', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='musicplayer.playlist')),
-                ('song', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='musicplayer.song')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("order", models.PositiveIntegerField()),
+                ("added_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "playlist",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="musicplayer.playlist",
+                    ),
+                ),
+                (
+                    "song",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="musicplayer.song",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['order'],
+                "ordering": ["order"],
             },
         ),
         migrations.AddField(
-            model_name='playlist',
-            name='songs',
-            field=models.ManyToManyField(through='musicplayer.PlaylistSong', to='musicplayer.song'),
+            model_name="playlist",
+            name="songs",
+            field=models.ManyToManyField(
+                through="musicplayer.PlaylistSong", to="musicplayer.song"
+            ),
         ),
     ]
