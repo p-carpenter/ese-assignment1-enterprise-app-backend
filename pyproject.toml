@@ -5,12 +5,26 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "coverage>=7.13.4",
+    "dj-database-url>=3.1.1",
+    "dj-rest-auth>=7.1.1",
     "django>=6.0.2",
+    "django-allauth>=65.14.3",
+    "django-anymail[sendgrid]>=14.0",
+    "django-cors-headers>=4.9.0",
     "djangorestframework>=3.16.1",
+    "djangorestframework-simplejwt>=5.5.1",
+    "gunicorn>=25.1.0",
     "psycopg>=3.3.2",
+    "python-dotenv>=1.2.1",
+    "requests>=2.32.5",
+    "ruff>=0.15.1",
 ]
 
 [dependency-groups]
 dev = [
     "django-debug-toolbar>=6.2.0",
 ]
+
+[tool.coverage.run]
+relative_files = true
