@@ -1,6 +1,8 @@
 # This file imports all settings from the main settings file and then overrides specific settings for testing.
 from .settings import *  # noqa: F403
 
+SECRET_KEY = "test_secret_key"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
