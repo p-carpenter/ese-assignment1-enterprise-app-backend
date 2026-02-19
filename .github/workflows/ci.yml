@@ -1,0 +1,72 @@
+name: Code quality and tests
+
+on: [pull_request, push]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: 'Install dependencies'
+        run: uv sync --frozen --dev  && uv cache prune --ci
+
+      - name: 'Run Ruff Lint Check'
+        run: uv run ruff check
+
+      - name: 'Run Ruff Format Check'
+        run: uv run ruff format
+
+  tests:
+    runs-on: ubuntu-latest
+    permissions:
+      # Gives the action the necessary permissions for publishing new
+      # comments in pull requests.
+      pull-requests: write
+      # Gives the action the necessary permissions for pushing data to the
+      # python-coverage-comment-action branch, and for editing existing
+      # comments (to avoid publishing multiple comments in the same PR)
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - name: 'Install uv'
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: 'Install dependencies'
+        run: uv sync --frozen --dev  && uv cache prune --ci
+
+      - name: 'Run Tests'
+        run: coverage run --source '.' manage.py test --settings=musicplayer_project.test_Settings -v 2
+        
+      - name: 'Publish coverage comment'
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  build:
+    needs: [code-quality, tests]
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Deploy to production'
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
