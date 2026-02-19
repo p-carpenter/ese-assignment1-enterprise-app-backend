@@ -54,8 +54,8 @@ jobs:
         run: uv sync --frozen --dev  && uv cache prune --ci
 
       - name: 'Run Tests'
-        run: coverage run --source '.' manage.py test --settings=musicplayer_project.test_Settings -v 2
-        
+        run: uv run coverage run --source '.' manage.py test --settings=musicplayer_project.test_Settings -v 2
+
       - name: 'Publish coverage comment'
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
