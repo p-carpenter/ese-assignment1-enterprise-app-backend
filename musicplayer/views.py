@@ -1,4 +1,4 @@
-from rest_framework import settings, viewsets, permissions, status
+from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.views.generic import RedirectView
@@ -71,6 +71,7 @@ class PlayLogViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
 
 # Custom Redirect View for Password Reset Confirmation
 class PasswordResetConfirmRedirectView(RedirectView):

@@ -4,12 +4,10 @@ from .settings import *  # noqa: F403
 SECRET_KEY = "test_secret_key"
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': ':memory:',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ":memory:",
     }
 }
 
-ACCOUNT_EMAIL_VERIFICATION = (
-    "none"
-)
+ACCOUNT_EMAIL_VERIFICATION = "none"
