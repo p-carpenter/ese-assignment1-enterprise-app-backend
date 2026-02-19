@@ -147,6 +147,9 @@ deployed_frontend = os.environ.get("RENDER_FRONTEND_URL")
 if deployed_frontend:
     CORS_ALLOWED_ORIGINS.append(deployed_frontend)
 
+# For redirect after password reset
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+
 # Auth settings
 AUTH_USER_MODEL = "users.CustomUser"
 

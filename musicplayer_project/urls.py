@@ -17,20 +17,26 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include, re_path
+from django.views.generic import RedirectView
 from allauth.account.views import ConfirmEmailView
+from musicplayer.views import PasswordResetConfirmRedirectView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("musicplayer.urls")),
-    path(
-        "api/auth/", include("dj_rest_auth.urls")
-    ),  # This includes login/logout/password reset endpoints
+    
+
+    path("api/auth/", include("dj_rest_auth.urls")),
+    path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
     re_path(
         r"^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
         ConfirmEmailView.as_view(),
         name="account_confirm_email",
     ),
+
     path(
-        "api/auth/registration/", include("dj_rest_auth.registration.urls")
-    ),  # This includes the registration endpoint
+        "api/auth/password/reset/confirm/<str:uidb64>/<str:token>/",
+        PasswordResetConfirmRedirectView.as_view(),
+        name="password_reset_confirm",
+    ),
 ]
