@@ -134,7 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = "static/"    
+STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -146,6 +146,9 @@ CORS_ALLOWED_ORIGINS = [
 deployed_frontend = os.environ.get("RENDER_FRONTEND_URL")
 if deployed_frontend:
     CORS_ALLOWED_ORIGINS.append(deployed_frontend)
+
+# For redirect after password reset
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 
 # Auth settings
 AUTH_USER_MODEL = "users.CustomUser"
@@ -177,8 +180,8 @@ AUTHENTICATION_BACKENDS = [
 # Required for django-allauth (used by dj-rest-auth for registration)
 SITE_ID = 1
 
-ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['username','email*', 'password1*', 'password2*']
+ACCOUNT_LOGIN_METHODS = {"email"}
+ACCOUNT_SIGNUP_FIELDS = ["username", "email*", "password1*", "password2*"]
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = (
     "mandatory"  # Or 'none' for no verification, 'optional' for optional verification
@@ -191,9 +194,5 @@ ANYMAIL = {
     "SENDGRID_API_KEY": os.getenv("SENDGRID_API_KEY"),
 }
 EMAIL_BACKEND = "anymail.backends.sendgrid.EmailBackend"
-DEFAULT_FROM_EMAIL = (
-    "musicplayer_noreply@proton.me" 
-)
-SERVER_EMAIL = (
-    "musicplayer_noreply@proton.me" 
-)
+DEFAULT_FROM_EMAIL = "musicplayer_noreply@proton.me"
+SERVER_EMAIL = "musicplayer_noreply@proton.me"

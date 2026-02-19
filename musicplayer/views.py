@@ -1,6 +1,8 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.views.generic import RedirectView
+from django.conf import settings
 from django.db.models import Q
 from .permissions import IsOwnerOrReadOnly
 from .models import Song, Playlist, PlayLog
@@ -69,3 +71,11 @@ class PlayLogViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+# Custom Redirect View for Password Reset Confirmation
+class PasswordResetConfirmRedirectView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        return f"{settings.FRONTEND_URL}/reset-password/confirm/{kwargs['uidb64']}/{kwargs['token']}/"
