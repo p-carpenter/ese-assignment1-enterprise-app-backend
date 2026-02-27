@@ -54,8 +54,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">49 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">47<span class="text"> run</span></button>
+            <span class="text">48 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">46<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">2<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_c0db5a5f8675b340_test_Settings_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-19 23:30 +0000
+            created at 2026-02-27 13:23 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -268,16 +268,15 @@
     <p class="run"><span class="n"><a id="t186" href="#t186">186</a></span><span class="t"><span class="nam">ACCOUNT_EMAIL_VERIFICATION</span> <span class="op">=</span> <span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t187" href="#t187">187</a></span><span class="t">    <span class="str">"mandatory"</span>  <span class="com"># Or 'none' for no verification, 'optional' for optional verification</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t188" href="#t188">188</a></span><span class="t"><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t"><span class="nam">ACCOUNT_CONFIRM_EMAIL_ON_GET</span> <span class="op">=</span> <span class="key">True</span>  <span class="com"># No need to sent POST request to confirmation link</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t190" href="#t190">190</a></span><span class="t"><span class="nam">LOGIN_URL</span> <span class="op">=</span> <span class="str">"/admin"</span>  <span class="com"># Path users will be redirected to after email verification/if not authenticated</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t191" href="#t191">191</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t192" href="#t192">192</a></span><span class="t"><span class="com"># Email backend</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t193" href="#t193">193</a></span><span class="t"><span class="nam">ANYMAIL</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t194" href="#t194">194</a></span><span class="t">    <span class="str">"SENDGRID_API_KEY"</span><span class="op">:</span> <span class="nam">os</span><span class="op">.</span><span class="nam">getenv</span><span class="op">(</span><span class="str">"SENDGRID_API_KEY"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t195" href="#t195">195</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t196" href="#t196">196</a></span><span class="t"><span class="nam">EMAIL_BACKEND</span> <span class="op">=</span> <span class="str">"anymail.backends.sendgrid.EmailBackend"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t197" href="#t197">197</a></span><span class="t"><span class="nam">DEFAULT_FROM_EMAIL</span> <span class="op">=</span> <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t198" href="#t198">198</a></span><span class="t"><span class="nam">SERVER_EMAIL</span> <span class="op">=</span> <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t189" href="#t189">189</a></span><span class="t"><span class="nam">LOGIN_URL</span> <span class="op">=</span> <span class="str">"/admin"</span>  <span class="com"># Path users will be redirected to after email verification/if not authenticated</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t190" href="#t190">190</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t191" href="#t191">191</a></span><span class="t"><span class="com"># Email backend</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t192" href="#t192">192</a></span><span class="t"><span class="nam">ANYMAIL</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t193" href="#t193">193</a></span><span class="t">    <span class="str">"SENDGRID_API_KEY"</span><span class="op">:</span> <span class="nam">os</span><span class="op">.</span><span class="nam">getenv</span><span class="op">(</span><span class="str">"SENDGRID_API_KEY"</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t194" href="#t194">194</a></span><span class="t"><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t195" href="#t195">195</a></span><span class="t"><span class="nam">EMAIL_BACKEND</span> <span class="op">=</span> <span class="str">"anymail.backends.sendgrid.EmailBackend"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t196" href="#t196">196</a></span><span class="t"><span class="nam">DEFAULT_FROM_EMAIL</span> <span class="op">=</span> <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t197" href="#t197">197</a></span><span class="t"><span class="nam">SERVER_EMAIL</span> <span class="op">=</span> <span class="str">"musicplayer_noreply@proton.me"</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -287,7 +286,7 @@
             <a class="nav" href="z_c0db5a5f8675b340_test_Settings_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-19 23:30 +0000
+            created at 2026-02-27 13:23 +0000
         </p>
     </div>
 </footer>
