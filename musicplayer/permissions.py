@@ -13,6 +13,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Write permissions are only allowed to the owner.
-        return (obj.uploaded_by == request.user) or (
+        # Check both 'owner' and 'uploaded_by' attributes dynamically
+        return (getattr(obj, "uploaded_by", None) == request.user) or (
             getattr(obj, "owner", None) == request.user
         )

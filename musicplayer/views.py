@@ -3,9 +3,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.views.generic import RedirectView
 from django.conf import settings
-from django.db.models import Q
+from django.db.models import Q, Max
 from .permissions import IsOwnerOrReadOnly
-from .models import Song, Playlist, PlayLog
+from .models import Song, Playlist, PlayLog, PlaylistSong
 from .serialisers import (
     SongSerialiser,
     PlaylistSerialiser,
@@ -51,12 +51,74 @@ class PlaylistViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        # Pass data to the serialiser (expects 'song_id' and 'order')
-        serializer = PlaylistSongSerialiser(data=request.data)
-        if serializer.is_valid():
-            serializer.save(playlist=playlist)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Get song_id from query params or request body
+        song_id = request.query_params.get("song_id") or request.data.get("song_id")
+        if not song_id:
+            return Response(
+                {"detail": "song_id is required (in query params or body)."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            song = Song.objects.get(id=song_id)
+        except Song.DoesNotExist:
+            return Response(
+                {"detail": "Song not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Get the next order value (or use provided order)
+        order = request.data.get("order")
+        if not order:
+            max_order = PlaylistSong.objects.filter(playlist=playlist).aggregate(
+                Max("order")
+            )["order__max"]
+            order = (max_order or 0) + 1
+
+        # Check if song is already in playlist
+        if PlaylistSong.objects.filter(playlist=playlist, song=song).exists():
+            return Response(
+                {"detail": "Song is already in this playlist."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        playlist_song = PlaylistSong.objects.create(
+            playlist=playlist, song=song, order=order
+        )
+        serializer = PlaylistSongSerialiser(playlist_song)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # Custom Action: DELETE /api/playlists/{id}/delete_song/
+    @action(detail=True, methods=["delete"])
+    def delete_song(self, request, pk=None):
+        playlist = self.get_object()
+
+        if playlist.owner != request.user:
+            return Response(
+                {"detail": "You do not have permission to edit this playlist."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        # Expect 'song_id' in the request (e.g., body or query params)
+        song_id = request.data.get("song_id") or request.query_params.get("song_id")
+        if not song_id:
+            return Response(
+                {"detail": "song_id is required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            playlist_song = PlaylistSong.objects.get(playlist=playlist, song_id=song_id)
+            playlist_song.delete()
+            return Response(
+                {"detail": "Song removed from playlist."},
+                status=status.HTTP_204_NO_CONTENT,
+            )
+        except PlaylistSong.DoesNotExist:
+            return Response(
+                {"detail": "Song not found in this playlist."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
 
 # Audit Log View (For History)
