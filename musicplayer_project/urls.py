@@ -16,18 +16,27 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include, re_path
-from allauth.account.views import ConfirmEmailView
-from musicplayer.views import PasswordResetConfirmRedirectView
+from django.urls import path, include
+
+# from allauth.account.views import ConfirmEmailView
+from musicplayer.views import (
+    PasswordResetConfirmRedirectView,
+    EmailVerificationRedirectView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("musicplayer.urls")),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
-    re_path(
-        r"^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
-        ConfirmEmailView.as_view(),
+    # re_path(
+    #    r"^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
+    #    ConfirmEmailView.as_view(),
+    #    name="account_confirm_email",
+    # ),
+    path(
+        "api/auth/account-confirm-email/<str:key>/",
+        EmailVerificationRedirectView.as_view(),
         name="account_confirm_email",
     ),
     path(

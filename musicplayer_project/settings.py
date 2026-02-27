@@ -186,7 +186,6 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = (
     "mandatory"  # Or 'none' for no verification, 'optional' for optional verification
 )
-ACCOUNT_CONFIRM_EMAIL_ON_GET = True  # No need to sent POST request to confirmation link
 LOGIN_URL = "/admin"  # Path users will be redirected to after email verification/if not authenticated
 
 # Email backend

@@ -79,3 +79,11 @@ class PasswordResetConfirmRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         return f"{settings.FRONTEND_URL}/reset-password/confirm/{kwargs['uidb64']}/{kwargs['token']}/"
+
+
+# Custom Redirect View for Email Verification Confirmation
+class EmailVerificationRedirectView(RedirectView):
+    permanent = False
+
+    def get_redirect_url(self, *args, **kwargs):
+        return f"{settings.FRONTEND_URL}/account-confirm-email/{kwargs['key']}"
