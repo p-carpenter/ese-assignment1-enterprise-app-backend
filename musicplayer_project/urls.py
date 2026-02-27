@@ -17,8 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+
 # from allauth.account.views import ConfirmEmailView
-from musicplayer.views import PasswordResetConfirmRedirectView, EmailVerificationRedirectView
+from musicplayer.views import (
+    PasswordResetConfirmRedirectView,
+    EmailVerificationRedirectView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
