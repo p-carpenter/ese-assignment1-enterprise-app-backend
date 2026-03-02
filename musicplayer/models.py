@@ -7,6 +7,8 @@ class Song(models.Model):
     title = models.CharField(max_length=255)
     artist = models.CharField(max_length=255)
     album = models.CharField(max_length=255, blank=True)
+    genre = models.CharField(max_length=100, blank=True)
+    release_year = models.IntegerField(blank=True, null=True)
     file_url = models.URLField()  # Cloudinary URL
     cover_art_url = models.URLField(blank=True)
     duration = models.IntegerField(help_text="Duration in seconds")
