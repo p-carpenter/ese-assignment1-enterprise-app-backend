@@ -10,7 +10,7 @@
 | musicplayer/apps.py                          |        3 |        0 |    100% |           |
 | musicplayer/migrations/0001\_initial.py      |        7 |        0 |    100% |           |
 | musicplayer/migrations/\_\_init\_\_.py       |        0 |        0 |    100% |           |
-| musicplayer/models.py                        |       32 |        2 |     94% |    18, 30 |
+| musicplayer/models.py                        |       34 |        2 |     94% |    20, 32 |
 | musicplayer/permissions.py                   |        6 |        1 |     83% |        13 |
 | musicplayer/serialisers.py                   |       31 |        0 |    100% |           |
 | musicplayer/tests/\_\_init\_\_.py            |        0 |        0 |    100% |           |
@@ -18,10 +18,10 @@
 | musicplayer/tests/test\_password\_reset.py   |      140 |        2 |     99% |    43, 98 |
 | musicplayer/tests/test\_permissions.py       |       24 |        3 |     88% |     49-52 |
 | musicplayer/urls.py                          |        8 |        0 |    100% |           |
-| musicplayer/views.py                         |       74 |       38 |     49% |27, 37-38, 41, 46-89, 94-118, 132, 135, 151 |
+| musicplayer/views.py                         |       80 |       38 |     52% |28, 38-39, 42, 47-90, 95-119, 137, 140, 156 |
 | musicplayer\_project/\_\_init\_\_.py         |        0 |        0 |    100% |           |
 | musicplayer\_project/asgi.py                 |        4 |        4 |      0% |     10-16 |
-| musicplayer\_project/settings.py             |       48 |        2 |     96% |   37, 148 |
+| musicplayer\_project/settings.py             |       49 |        2 |     96% |   37, 148 |
 | musicplayer\_project/test\_Settings.py       |        4 |        0 |    100% |           |
 | musicplayer\_project/urls.py                 |        4 |        0 |    100% |           |
 | musicplayer\_project/wsgi.py                 |        4 |        4 |      0% |     10-16 |
@@ -33,7 +33,7 @@
 | users/models.py                              |        6 |        1 |     83% |        10 |
 | users/tests.py                               |       17 |        0 |    100% |           |
 | users/views.py                               |        0 |        0 |    100% |           |
-| **TOTAL**                                    |  **461** |   **61** | **87%** |           |
+| **TOTAL**                                    |  **470** |   **61** | **87%** |           |
 
 
 ## Setup coverage badge
