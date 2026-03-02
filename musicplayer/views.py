@@ -12,6 +12,7 @@ from .serialisers import (
     PlaylistSongSerialiser,
     PlayLogSerialiser,
 )
+from rest_framework.pagination import PageNumberPagination
 
 
 # Song View (Browse functionality)
@@ -121,14 +122,18 @@ class PlaylistViewSet(viewsets.ModelViewSet):
             )
 
 
-# Audit Log View (For History)
+class PlayLogPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = "page_size"
+    max_page_size = 100
+
 class PlayLogViewSet(viewsets.ModelViewSet):
     serializer_class = PlayLogSerialiser
     permission_classes = [permissions.IsAuthenticated]
-    http_method_names = ["get", "post"]  # No updating/deleting history
+    pagination_class = PlayLogPagination
+    http_method_names = ["get", "post"]
 
     def get_queryset(self):
-        # Users only see their own history
         return PlayLog.objects.filter(user=self.request.user).order_by("-played_at")
 
     def perform_create(self, serializer):

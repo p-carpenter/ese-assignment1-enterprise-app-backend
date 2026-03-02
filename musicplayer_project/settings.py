@@ -187,7 +187,7 @@ ACCOUNT_EMAIL_VERIFICATION = (
     "mandatory"  # Or 'none' for no verification, 'optional' for optional verification
 )
 LOGIN_URL = "/admin"  # Path users will be redirected to after email verification/if not authenticated
-
+OLD_PASSWORD_FIELD_ENABLED = True
 # Email backend
 ANYMAIL = {
     "SENDGRID_API_KEY": os.getenv("SENDGRID_API_KEY"),
