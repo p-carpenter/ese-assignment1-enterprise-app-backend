@@ -15,10 +15,12 @@ from .serialisers import (
 )
 from rest_framework.pagination import PageNumberPagination
 
+
 class SongPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 100
+
 
 # Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):
@@ -29,7 +31,11 @@ class SongViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated,
         IsOwnerOrReadOnly,
     ]  # must be owner to edit/delete, but anyone can read
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
     search_fields = ["title", "artist", "album"]
     ordering_fields = ["title", "duration", "release_year", "uploaded_at"]
     ordering = ["title"]  # default ordering
@@ -124,6 +130,7 @@ class PlayLogPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 100
+
 
 class PlayLogViewSet(viewsets.ModelViewSet):
     serializer_class = PlayLogSerialiser

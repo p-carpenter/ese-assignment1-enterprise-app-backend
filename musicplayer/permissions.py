@@ -38,7 +38,7 @@ class IsOwnerOrCollaborator(permissions.BasePermission):
             return True
 
         # For add_song and delete_song actions on collaborative playlists
-        if view.action in ['add_song', 'delete_song']:
+        if view.action in ["add_song", "delete_song"]:
             return getattr(obj, "is_collaborative", False)
 
         # For all other write operations (update, partial_update, destroy),

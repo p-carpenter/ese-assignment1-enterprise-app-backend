@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "anymail",  # For email verification
     "users",
-    'django_filters',
+    "django_filters",
 ]
 
 MIDDLEWARE = [
