@@ -43,10 +43,19 @@ class PlaylistSongSerialiser(serializers.ModelSerializer):
 class PlaylistSerialiser(serializers.ModelSerializer):
     songs = PlaylistSongSerialiser(source="playlistsong_set", many=True, read_only=True)
     owner = UserMiniSerialiser(read_only=True)
-    
+
     class Meta:
         model = Playlist
-        fields = ["id", "title", "description", "is_public", "owner", "songs"]
+        fields = [
+            "id",
+            "title",
+            "description",
+            "is_public",
+            "is_collaborative",
+            "cover_art_url",
+            "owner",
+            "songs",
+        ]
         read_only_fields = ["owner"]
 
 
