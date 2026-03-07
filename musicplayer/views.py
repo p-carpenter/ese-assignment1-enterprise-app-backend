@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.db.models import Q, Max
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsOwnerOrCollaborator
 from .models import Song, Playlist, PlayLog, PlaylistSong
 from .serialisers import (
     SongSerialiser,
@@ -15,10 +15,12 @@ from .serialisers import (
 )
 from rest_framework.pagination import PageNumberPagination
 
+
 class SongPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 100
+
 
 # Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):
@@ -29,7 +31,11 @@ class SongViewSet(viewsets.ModelViewSet):
         permissions.IsAuthenticated,
         IsOwnerOrReadOnly,
     ]  # must be owner to edit/delete, but anyone can read
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [
+        django_filters.rest_framework.DjangoFilterBackend,
+        filters.OrderingFilter,
+        filters.SearchFilter,
+    ]
     search_fields = ["title", "artist", "album"]
     ordering_fields = ["title", "duration", "release_year", "uploaded_at"]
     ordering = ["title"]  # default ordering
@@ -41,7 +47,7 @@ class SongViewSet(viewsets.ModelViewSet):
 # Playlist View
 class PlaylistViewSet(viewsets.ModelViewSet):
     serializer_class = PlaylistSerialiser
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated, IsOwnerOrCollaborator]
 
     def get_queryset(self):
         # Users see their own playlists or public playlists
@@ -55,12 +61,6 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["post"])
     def add_song(self, request, pk=None):
         playlist = self.get_object()
-
-        if playlist.owner != request.user:
-            return Response(
-                {"detail": "You do not have permission to edit this playlist."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
 
         # Get song_id from query params or request body
         song_id = request.query_params.get("song_id") or request.data.get("song_id")
@@ -94,7 +94,7 @@ class PlaylistViewSet(viewsets.ModelViewSet):
             )
 
         playlist_song = PlaylistSong.objects.create(
-            playlist=playlist, song=song, order=order
+            playlist=playlist, song=song, order=order, added_by=request.user
         )
         serializer = PlaylistSongSerialiser(playlist_song)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -103,12 +103,6 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["delete"])
     def delete_song(self, request, pk=None):
         playlist = self.get_object()
-
-        if playlist.owner != request.user:
-            return Response(
-                {"detail": "You do not have permission to edit this playlist."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
 
         # Expect 'song_id' in the request (e.g., body or query params)
         song_id = request.data.get("song_id") or request.query_params.get("song_id")
@@ -136,6 +130,7 @@ class PlayLogPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 100
+
 
 class PlayLogViewSet(viewsets.ModelViewSet):
     serializer_class = PlayLogSerialiser

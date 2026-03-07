@@ -25,6 +25,8 @@ class Playlist(models.Model):
     description = models.TextField(blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     is_public = models.BooleanField(default=False)
+    is_collaborative = models.BooleanField(default=False)
+    cover_art_url = models.URLField(blank=True)
     songs = models.ManyToManyField(Song, through="PlaylistSong")
 
     def __str__(self):
@@ -35,6 +37,13 @@ class PlaylistSong(models.Model):
     playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     order = models.PositiveIntegerField()
+    added_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="playlist_songs_added",
+    )
     added_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
