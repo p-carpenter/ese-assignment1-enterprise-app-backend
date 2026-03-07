@@ -1,4 +1,5 @@
-from rest_framework import viewsets, permissions, status
+import django_filters
+from rest_framework import filters, viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.views.generic import RedirectView
@@ -14,15 +15,24 @@ from .serialisers import (
 )
 from rest_framework.pagination import PageNumberPagination
 
+class SongPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = "page_size"
+    max_page_size = 100
 
 # Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all()
     serializer_class = SongSerialiser
+    pagination_class = SongPagination
     permission_classes = [
         permissions.IsAuthenticated,
         IsOwnerOrReadOnly,
     ]  # must be owner to edit/delete, but anyone can read
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]
+    search_fields = ["title", "artist", "album"]
+    ordering_fields = ["title", "duration", "release_year", "uploaded_at"]
+    ordering = ["title"]  # default ordering
 
     def perform_create(self, serializer):
         serializer.save(uploaded_by=self.request.user)
