@@ -60,7 +60,12 @@ class PlaylistSerialiser(serializers.ModelSerializer):
 
 
 class PlayLogSerialiser(serializers.ModelSerializer):
+    song = SongSerialiser(read_only=True)
+    song_id = serializers.PrimaryKeyRelatedField(
+        queryset=Song.objects.all(), source='song', write_only=True
+    )
+
     class Meta:
         model = PlayLog
-        fields = ["id", "song", "played_at"]
+        fields = ["id", "song", "song_id", "played_at"]
         read_only_fields = ["user", "played_at"]
