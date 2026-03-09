@@ -20,27 +20,22 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
 
 class IsOwnerOrCollaborator(permissions.BasePermission):
-    """
-    Custom permission for playlists:
-    - Owners can do everything
-    - For collaborative playlists, any authenticated user can add/delete songs
-    - For non-collaborative playlists, only owners can add/delete songs
-    - Only owners can update/delete the playlist itself
-    """
-
     def has_object_permission(self, request, view, obj):
-        # Read permissions are allowed to any authenticated user
-        if request.method in permissions.SAFE_METHODS:
-            return True
-
         # Owner has full permissions
         if getattr(obj, "owner", None) == request.user:
             return True
 
-        # For add_song and delete_song actions on collaborative playlists
+        # Private, non-collaborative playlists: owner only
+        if not obj.is_public and not obj.is_collaborative:
+            return False
+
+        # Public or collaborative: reads allowed
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # Write actions: only add/delete songs on collaborative playlists
         if view.action in ["add_song", "delete_song"]:
             return getattr(obj, "is_collaborative", False)
 
-        # For all other write operations (update, partial_update, destroy),
-        # only the owner has permission
+        # update, partial_update, destroy: owner only
         return False
