@@ -23,17 +23,14 @@ from musicplayer.views import (
     PasswordResetConfirmRedirectView,
     EmailVerificationRedirectView,
 )
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("musicplayer.urls")),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
-    # re_path(
-    #    r"^api/auth/registration/account-confirm-email/(?P<key>[-:\w]+)/$",
-    #    ConfirmEmailView.as_view(),
-    #    name="account_confirm_email",
-    # ),
     path(
         "api/auth/account-confirm-email/<str:key>/",
         EmailVerificationRedirectView.as_view(),
@@ -44,4 +41,6 @@ urlpatterns = [
         PasswordResetConfirmRedirectView.as_view(),
         name="password_reset_confirm",
     ),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui')
 ]
