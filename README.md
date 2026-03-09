@@ -12,7 +12,7 @@
 | musicplayer/migrations/\_\_init\_\_.py       |        0 |        0 |    100% |           |
 | musicplayer/models.py                        |       36 |        2 |     94% |    19, 33 |
 | musicplayer/permissions.py                   |       15 |        8 |     47% | 13, 33-46 |
-| musicplayer/serialisers.py                   |       39 |        0 |    100% |           |
+| musicplayer/serialisers.py                   |       41 |        0 |    100% |           |
 | musicplayer/tests/\_\_init\_\_.py            |        0 |        0 |    100% |           |
 | musicplayer/tests/test\_auth\_integration.py |       20 |        2 |     90% |    28, 39 |
 | musicplayer/tests/test\_password\_reset.py   |      140 |        2 |     99% |    43, 98 |
@@ -33,7 +33,7 @@
 | users/models.py                              |        6 |        1 |     83% |        10 |
 | users/tests.py                               |       17 |        0 |    100% |           |
 | users/views.py                               |        0 |        0 |    100% |           |
-| **TOTAL**                                    |  **497** |   **64** | **87%** |           |
+| **TOTAL**                                    |  **499** |   **64** | **87%** |           |
 
 
 ## Setup coverage badge
