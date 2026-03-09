@@ -50,9 +50,12 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrCollaborator]
 
     def get_queryset(self):
-        # Users see their own playlists or public playlists
         user = self.request.user
-        return Playlist.objects.filter(Q(owner=user) | Q(is_public=True))
+        return Playlist.objects.filter(
+            Q(owner=user) |
+            Q(is_public=True) |
+            Q(is_collaborative=True)  # collaborative playlists visible to all authenticated users
+        ).distinct()
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
