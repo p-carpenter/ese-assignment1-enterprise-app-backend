@@ -171,6 +171,8 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "musicplayer-auth",
     "JWT_AUTH_REFRESH_COOKIE": "musicplayer-refresh",
     "JWT_AUTH_HTTPONLY": True,
+    "JWT_AUTH_SAMESITE": "None",
+    "JWT_AUTH_SECURE": True,
     "USER_DETAILS_SERIALIZER": "musicplayer.serialisers.CustomUserSerialiser",
 }
 
