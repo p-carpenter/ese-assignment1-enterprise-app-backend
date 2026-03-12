@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 # from allauth.account.views import ConfirmEmailView
+from musicplayer.spotify_views import spotify_token
 from musicplayer.views import (
     PasswordResetConfirmRedirectView,
     EmailVerificationRedirectView,
@@ -28,6 +29,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/spotify/token/", spotify_token),
     path("api/", include("musicplayer.urls")),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
