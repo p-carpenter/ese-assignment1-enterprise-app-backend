@@ -138,6 +138,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+SPOTIFY_CLIENT_ID=os.getenv('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET=os.getenv('SPOTIFY_CLIENT_SECRET')
+SPOTIFY_REFRESH_TOKEN=os.getenv('SPOTIFY_REFRESH_TOKEN')
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
