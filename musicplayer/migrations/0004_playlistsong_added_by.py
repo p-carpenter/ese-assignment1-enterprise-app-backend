@@ -4,7 +4,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("musicplayer", "0003_playlist_is_collaborative"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
