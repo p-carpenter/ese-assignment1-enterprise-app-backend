@@ -2,38 +2,41 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/p-carpenter/ese-assignment1-enterprise-app-backend/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                                         |    Stmts |     Miss |   Cover |   Missing |
-|--------------------------------------------- | -------: | -------: | ------: | --------: |
-| manage.py                                    |       11 |        2 |     82% |     13-14 |
-| musicplayer/\_\_init\_\_.py                  |        0 |        0 |    100% |           |
-| musicplayer/admin.py                         |        0 |        0 |    100% |           |
-| musicplayer/apps.py                          |        3 |        0 |    100% |           |
-| musicplayer/migrations/0001\_initial.py      |        7 |        0 |    100% |           |
-| musicplayer/migrations/\_\_init\_\_.py       |        0 |        0 |    100% |           |
-| musicplayer/models.py                        |       36 |        2 |     94% |    19, 33 |
-| musicplayer/permissions.py                   |       17 |       10 |     41% | 13, 25-41 |
-| musicplayer/serialisers.py                   |       41 |        0 |    100% |           |
-| musicplayer/tests/\_\_init\_\_.py            |        0 |        0 |    100% |           |
-| musicplayer/tests/test\_auth\_integration.py |       20 |        2 |     90% |    28, 39 |
-| musicplayer/tests/test\_password\_reset.py   |      140 |        2 |     99% |    43, 98 |
-| musicplayer/tests/test\_permissions.py       |       24 |        3 |     88% |     49-52 |
-| musicplayer/urls.py                          |        8 |        0 |    100% |           |
-| musicplayer/views.py                         |       86 |       34 |     60% |44, 53-54, 61, 66-103, 108-126, 145, 148, 164 |
-| musicplayer\_project/\_\_init\_\_.py         |        0 |        0 |    100% |           |
-| musicplayer\_project/asgi.py                 |        4 |        4 |      0% |     10-16 |
-| musicplayer\_project/settings.py             |       50 |        2 |     96% |   37, 156 |
-| musicplayer\_project/test\_Settings.py       |        4 |        0 |    100% |           |
-| musicplayer\_project/urls.py                 |        5 |        0 |    100% |           |
-| musicplayer\_project/wsgi.py                 |        4 |        4 |      0% |     10-16 |
-| users/\_\_init\_\_.py                        |        0 |        0 |    100% |           |
-| users/admin.py                               |        7 |        0 |    100% |           |
-| users/apps.py                                |        3 |        0 |    100% |           |
-| users/migrations/0001\_initial.py            |        8 |        0 |    100% |           |
-| users/migrations/\_\_init\_\_.py             |        0 |        0 |    100% |           |
-| users/models.py                              |        6 |        1 |     83% |        10 |
-| users/tests.py                               |       17 |        0 |    100% |           |
-| users/views.py                               |        0 |        0 |    100% |           |
-| **TOTAL**                                    |  **501** |   **66** | **87%** |           |
+| Name                                                        |    Stmts |     Miss |   Cover |   Missing |
+|------------------------------------------------------------ | -------: | -------: | ------: | --------: |
+| manage.py                                                   |       11 |        2 |     82% |     13-14 |
+| musicplayer/\_\_init\_\_.py                                 |        0 |        0 |    100% |           |
+| musicplayer/admin.py                                        |        0 |        0 |    100% |           |
+| musicplayer/apps.py                                         |        3 |        0 |    100% |           |
+| musicplayer/migrations/0001\_initial.py                     |        7 |        0 |    100% |           |
+| musicplayer/migrations/0002\_playlist\_cover\_art\_url.py   |        4 |        0 |    100% |           |
+| musicplayer/migrations/0003\_playlist\_is\_collaborative.py |        4 |        0 |    100% |           |
+| musicplayer/migrations/0004\_playlistsong\_added\_by.py     |        6 |        0 |    100% |           |
+| musicplayer/migrations/\_\_init\_\_.py                      |        0 |        0 |    100% |           |
+| musicplayer/models.py                                       |       36 |        2 |     94% |    19, 33 |
+| musicplayer/permissions.py                                  |       17 |       10 |     41% | 13, 25-41 |
+| musicplayer/serialisers.py                                  |       41 |        0 |    100% |           |
+| musicplayer/tests/\_\_init\_\_.py                           |        0 |        0 |    100% |           |
+| musicplayer/tests/test\_auth\_integration.py                |       20 |        2 |     90% |    28, 39 |
+| musicplayer/tests/test\_password\_reset.py                  |      140 |        2 |     99% |    43, 98 |
+| musicplayer/tests/test\_permissions.py                      |       24 |        3 |     88% |     49-52 |
+| musicplayer/urls.py                                         |        8 |        0 |    100% |           |
+| musicplayer/views.py                                        |       86 |       34 |     60% |44, 53-54, 61, 66-103, 108-126, 145, 148, 164 |
+| musicplayer\_project/\_\_init\_\_.py                        |        0 |        0 |    100% |           |
+| musicplayer\_project/asgi.py                                |        4 |        4 |      0% |     10-16 |
+| musicplayer\_project/settings.py                            |       50 |        2 |     96% |   37, 156 |
+| musicplayer\_project/test\_Settings.py                      |        4 |        0 |    100% |           |
+| musicplayer\_project/urls.py                                |        5 |        0 |    100% |           |
+| musicplayer\_project/wsgi.py                                |        4 |        4 |      0% |     10-16 |
+| users/\_\_init\_\_.py                                       |        0 |        0 |    100% |           |
+| users/admin.py                                              |        7 |        0 |    100% |           |
+| users/apps.py                                               |        3 |        0 |    100% |           |
+| users/migrations/0001\_initial.py                           |        8 |        0 |    100% |           |
+| users/migrations/\_\_init\_\_.py                            |        0 |        0 |    100% |           |
+| users/models.py                                             |        6 |        1 |     83% |        10 |
+| users/tests.py                                              |       17 |        0 |    100% |           |
+| users/views.py                                              |        0 |        0 |    100% |           |
+| **TOTAL**                                                   |  **515** |   **66** | **87%** |           |
 
 
 ## Setup coverage badge
