@@ -54,9 +54,7 @@ class PlaylistViewSet(viewsets.ModelViewSet):
         return Playlist.objects.filter(
             Q(owner=user)
             | Q(is_public=True)
-            | Q(
-                is_collaborative=True
-            )  # collaborative playlists visible to all authenticated users
+            | (Q(is_collaborative=True) & Q(is_public=True))
         ).distinct()
 
     def perform_create(self, serializer):
