@@ -102,10 +102,10 @@ DATABASES = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Music Player API',
-    'DESCRIPTION': 'Ada Enterprise Software Engineering Assignment 1 - Music Player API',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
+    "TITLE": "Music Player API",
+    "DESCRIPTION": "Ada Enterprise Software Engineering Assignment 1 - Music Player API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 # Password validation
@@ -162,8 +162,10 @@ FRONTEND_URL = os.environ.get("RENDER_FRONTEND_URL", "http://localhost:5173")
 AUTH_USER_MODEL = "users.CustomUser"
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": ("dj_rest_auth.jwt_auth.JWTCookieAuthentication",),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 REST_AUTH = {
