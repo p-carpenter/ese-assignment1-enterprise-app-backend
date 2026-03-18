@@ -41,6 +41,6 @@ urlpatterns = [
         PasswordResetConfirmRedirectView.as_view(),
         name="password_reset_confirm",
     ),
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui')
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 ]
