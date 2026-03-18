@@ -6,10 +6,10 @@ from django.conf import settings
 class Song(models.Model):
     title = models.CharField(max_length=255)
     artist = models.CharField(max_length=255)
-    album = models.CharField(max_length=255, blank=True)
+    album = models.CharField(max_length=255, blank=True, null=True)
     release_year = models.IntegerField(blank=True, null=True)
     file_url = models.URLField()  # Cloudinary URL
-    cover_art_url = models.URLField(blank=True)
+    cover_art_url = models.URLField(default="https://placehold.co/220", blank=True)
     duration = models.IntegerField(help_text="Duration in seconds")
 
     uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -26,7 +26,7 @@ class Playlist(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     is_public = models.BooleanField(default=False)
     is_collaborative = models.BooleanField(default=False)
-    cover_art_url = models.URLField(blank=True)
+    cover_art_url = models.URLField(default="https://placehold.co/220", blank=True)
     songs = models.ManyToManyField(Song, through="PlaylistSong")
 
     def __str__(self):
