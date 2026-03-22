@@ -28,13 +28,13 @@ class SongPagination(PageNumberPagination):
 
 # Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):
-    queryset = Song.objects.all()
+    queryset = Song.objects.select_related("uploaded_by").all()
     serializer_class = SongSerialiser
     pagination_class = SongPagination
     permission_classes = [
         permissions.IsAuthenticated,
         IsOwnerOrReadOnly,
-    ]  # must be owner to edit/delete, but anyone can read
+    ]  # Must be owner to edit/delete, but anyone can read.
     filter_backends = [
         django_filters.rest_framework.DjangoFilterBackend,
         filters.OrderingFilter,
@@ -46,6 +46,14 @@ class SongViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(uploaded_by=self.request.user)
+
+    def get_throttles(self):
+        # Only throttle the creation of new songs.
+        if self.action == "create":
+            self.throttle_scope = "song_upload"
+            return [ScopedRateThrottle()]
+        # Fall back to default global throttles for browsing.
+        return super().get_throttles()
 
 
 # Playlist View
@@ -116,6 +124,9 @@ class PlayLogViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    throttle_classes = [ScopedRateThrottle]
+    throttle_scope = "playlog_spam"
 
 
 # Custom Redirect View for Password Reset Confirmation
