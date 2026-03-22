@@ -1,0 +1,11 @@
+[run]
+source = .
+omit =
+    manage.py
+    *__init__.py
+    */migrations/*
+    */tests/*
+    musicplayer_project/asgi.py
+    musicplayer_project/wsgi.py
+    musicplayer_project/test_Settings.py
+    musicplayer_project/settings.py
