@@ -21,25 +21,17 @@ class CriticalAuthTests(APITestCase):
             "password2": "strong_password123",
         }
 
-        # Try to Register
+        # Try to register.
         response = self.client.post(register_url, user_data)
-
-        if response.status_code != 201:
-            print(f"\nREGISTRATION ERROR: {response.data}")
-
         self.assertEqual(
             response.status_code, status.HTTP_201_CREATED, "Registration failed"
         )
 
-        # Try to Login with those credentials
+        # Try to login with those credentials.
         login_data = {"email": "new@example.com", "password": "strong_password123"}
         response = self.client.post(login_url, login_data)
 
-        if response.status_code != 200:
-            print(f"\nLOGIN ERROR: {response.data}")
-        # ----------------------------
-
-        # 3. Verify we got a Token
+        # Verify we got a token.
         self.assertEqual(response.status_code, status.HTTP_200_OK, "Login failed")
         self.assertTrue(
             "key" in response.data or "access" in response.data, "No token returned"
