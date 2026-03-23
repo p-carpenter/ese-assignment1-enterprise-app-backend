@@ -10,7 +10,7 @@ User = get_user_model()
 class UserMiniSerialiser(serializers.ModelSerializer):
     """Serialiser returning a compact representation of a user.
 
-    Provides only the fields required for embedding within other serializers
+    Provides only the fields required for embedding within other serialisers
     (id, username and avatar_url).
     """
 
@@ -100,11 +100,8 @@ class SongSerialiser(serializers.ModelSerializer):
             serializers.ValidationError: If URL is not on the allowed domain.
         """
 
-        allowed_domain = "https://res.cloudinary.com/mkmtszfb"
-        if not value.startswith(allowed_domain):
-            raise serializers.ValidationError(
-                f"file_url must strictly be hosted on the Cloudinary domain ({allowed_domain})."
-            )
+        if not value.startswith("https://res.cloudinary.com/"):
+            raise serializers.ValidationError("file_url must be a secure Cloudinary url.")
         return value
 
     def validate_cover_art_url(self, value):
@@ -120,12 +117,9 @@ class SongSerialiser(serializers.ModelSerializer):
             serializers.ValidationError: If URL is not on the allowed domain.
         """
 
-        allowed_domain = "https://res.cloudinary.com/mkmtszfb"
-        if value and not value.startswith(allowed_domain):
-            if value != "https://placehold.co/220":
-                raise serializers.ValidationError(
-                    f"cover_art_url must strictly be hosted on the Cloudinary domain ({allowed_domain})."
-                )
+        if value and value != "https://placehold.co/220":
+            if not value.startswith("https://res.cloudinary.com/"):
+                raise serializers.ValidationError("cover_art_url must be a secure Cloudinary url.")
         return value
 
 
