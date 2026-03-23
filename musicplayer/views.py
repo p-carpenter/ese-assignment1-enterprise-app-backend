@@ -21,6 +21,14 @@ from rest_framework.pagination import PageNumberPagination
 
 
 class SongPagination(PageNumberPagination):
+    """Pagination for song listing endpoints with sensible defaults.
+
+    Attributes:
+        page_size (int): Default number of items per page.
+        page_size_query_param (str): Query param to override page size.
+        max_page_size (int): Maximum allowed page size.
+    """
+
     page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 100
@@ -28,6 +36,24 @@ class SongPagination(PageNumberPagination):
 
 # Song View (Browse functionality)
 class SongViewSet(viewsets.ModelViewSet):
+    """ViewSet for browsing and managing `Song` instances.
+
+    Supports list, retrieve, create, update and delete actions. Read access is
+    available to authenticated users while write access is restricted by the
+    `IsOwnerOrReadOnly` permission. Provides search, ordering and pagination
+    configuration for convenient browsing.
+
+    Attributes:
+        queryset: Base queryset for Song objects, optimized with select_related.
+        serializer_class: Serialiser for Song instances.
+        pagination_class: Pagination configuration for song listing.
+        permission_classes: Permissions controlling access to song endpoints.
+        filter_backends: Backends for filtering, ordering and searching songs.
+        search_fields: Fields that can be searched via the search filter.
+        ordering_fields: Fields that can be used for ordering results.
+        ordering: Default ordering for song listings.
+    """
+
     queryset = Song.objects.select_related("uploaded_by").all()
     serializer_class = SongSerialiser
     pagination_class = SongPagination
@@ -45,9 +71,20 @@ class SongViewSet(viewsets.ModelViewSet):
     ordering = ["title"]  # default ordering
 
     def perform_create(self, serializer):
+        """Set the `uploaded_by` field to the current user on create.
+
+        Args:
+            serializer: The serialiser instance used to create the model.
+        """
+
         serializer.save(uploaded_by=self.request.user)
 
     def get_throttles(self):
+        """Return throttles used for the current action.
+
+        Only throttle uploads (create action) with the `song_upload` scope.
+        """
+
         # Only throttle the creation of new songs.
         if self.action == "create":
             self.throttle_scope = "song_upload"
@@ -58,10 +95,28 @@ class SongViewSet(viewsets.ModelViewSet):
 
 # Playlist View
 class PlaylistViewSet(viewsets.ModelViewSet):
+    """ViewSet for creating, listing and modifying `Playlist` objects.
+
+    Owners may update or delete their playlists. Collaborative playlists allow
+    additional users to add or remove songs (controlled by
+    `IsOwnerOrCollaborator`). Exposes custom actions `add_song` and
+    `delete_song` to manage playlist contents.
+
+    Attributes:
+        serializer_class: Serialiser for Playlist instances.
+        permission_classes: Permissions controlling access to playlist endpoints.
+    """
+
     serializer_class = PlaylistSerialiser
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrCollaborator]
 
     def get_queryset(self):
+        """Return playlists visible to the requesting user.
+
+        Includes playlists owned by the user or those marked as public. The
+        queryset is optimised with select_related and prefetch_related.
+        """
+
         user = self.request.user
         return (
             Playlist.objects.filter(Q(owner=user) | Q(is_public=True))
@@ -75,12 +130,19 @@ class PlaylistViewSet(viewsets.ModelViewSet):
         )
 
     def perform_create(self, serializer):
+        """Assign the requesting user as the `owner` when creating a playlist."""
+
         serializer.save(owner=self.request.user)
 
     @action(detail=True, methods=["post"])
     def add_song(self, request, pk=None):
         playlist = self.get_object()
         song_id = request.data.get("song_id")
+
+        """API action to add a song to this playlist.
+
+        Expects `song_id` in the request data and optionally `order`.
+        """
 
         if not song_id:
             raise ValidationError("song_id is required.")
@@ -100,6 +162,11 @@ class PlaylistViewSet(viewsets.ModelViewSet):
         playlist = self.get_object()
         song_id = request.query_params.get("song_id") or request.data.get("song_id")
 
+        """API action to remove a song from this playlist.
+
+        Accepts `song_id` either as a query parameter or in the request body.
+        """
+
         if not song_id:
             raise ValidationError("song_id is required.")
 
@@ -108,38 +175,81 @@ class PlaylistViewSet(viewsets.ModelViewSet):
 
 
 class PlayLogPagination(PageNumberPagination):
+    """Pagination for play log endpoints with sensible defaults.
+
+    Attributes:
+        page_size (int): Default number of items per page.
+        page_size_query_param (str): Query param to override page size.
+        max_page_size (int): Maximum allowed page size.
+    """
+
     page_size = 10
     page_size_query_param = "page_size"
     max_page_size = 100
 
 
 class PlayLogViewSet(viewsets.ModelViewSet):
+    """ViewSet for a user's `PlayLog` entries.
+
+    Allows listing and creating play log entries. The queryset is limited to
+    entries belonging to the requesting user; creating an entry sets the
+    `user` automatically to the requester. Only `get` and `post` methods are
+    permitted.
+
+    Attributes:
+        serializer_class: Serialiser for PlayLog instances.
+        permission_classes: Permissions controlling access to play log endpoints.
+        pagination_class: Pagination configuration for play log listing.
+        throttle_classes: Throttling configuration to prevent spammy play logs.
+        throttle_scope: Throttle scope name for play log creation.
+    """
+
     serializer_class = PlayLogSerialiser
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = PlayLogPagination
     http_method_names = ["get", "post"]
 
     def get_queryset(self):
+        """Return play log entries for the current user ordered by time.
+
+        Only entries belonging to the requesting user are returned.
+        """
+
         return PlayLog.objects.filter(user=self.request.user).order_by("-played_at")
 
     def perform_create(self, serializer):
+        """Set the `user` on newly created PlayLog entries to the current user."""
+
         serializer.save(user=self.request.user)
 
     throttle_classes = [ScopedRateThrottle]
     throttle_scope = "playlog_spam"
 
 
-# Custom Redirect View for Password Reset Confirmation
+# Custom Redirect View for Password Reset Confirmation.
 class PasswordResetConfirmRedirectView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
+        """Build the frontend URL for password reset confirmation.
+
+        The view expects `uidb64` and `token` kwargs provided by Django's
+        password reset workflow and redirects to the corresponding
+        frontend route.
+        """
+
         return f"{settings.FRONTEND_URL}/reset-password/confirm/{kwargs['uidb64']}/{kwargs['token']}/"
 
 
-# Custom Redirect View for Email Verification Confirmation
+# Custom Redirect View for Email Verification Confirmation.
 class EmailVerificationRedirectView(RedirectView):
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
+        """Build the frontend URL for email verification confirmation.
+
+        The view expects a `key` kwarg from the email verification flow and
+        redirects to the frontend confirmation route.
+        """
+
         return f"{settings.FRONTEND_URL}/account-confirm-email/{kwargs['key']}"
