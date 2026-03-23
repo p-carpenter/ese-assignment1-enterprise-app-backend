@@ -8,10 +8,10 @@
 | musicplayer/apps.py          |        3 |        0 |     100% |           |
 | musicplayer/models.py        |       36 |        0 |     100% |           |
 | musicplayer/permissions.py   |       17 |        0 |     100% |           |
-| musicplayer/serialisers.py   |       70 |        0 |     100% |           |
+| musicplayer/serialisers.py   |       68 |        0 |     100% |           |
 | musicplayer/services.py      |       23 |        0 |     100% |           |
 | musicplayer/urls.py          |        8 |        0 |     100% |           |
-| musicplayer/views.py         |       82 |        0 |     100% |           |
+| musicplayer/views.py         |       84 |        0 |     100% |           |
 | musicplayer\_project/urls.py |        5 |        0 |     100% |           |
 | users/admin.py               |        7 |        0 |     100% |           |
 | users/apps.py                |        3 |        0 |     100% |           |
