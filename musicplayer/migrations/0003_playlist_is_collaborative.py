@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('musicplayer', '0002_playlist_cover_art_url'),
+        ("musicplayer", "0002_playlist_cover_art_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='playlist',
-            name='is_collaborative',
+            model_name="playlist",
+            name="is_collaborative",
             field=models.BooleanField(default=False),
         ),
     ]

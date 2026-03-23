@@ -4,25 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('musicplayer', '0004_playlistsong_added_by'),
+        ("musicplayer", "0004_playlistsong_added_by"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='playlist',
-            name='cover_art_url',
-            field=models.URLField(blank=True, default='https://placehold.co/220'),
+            model_name="playlist",
+            name="cover_art_url",
+            field=models.URLField(blank=True, default="https://placehold.co/220"),
         ),
         migrations.AlterField(
-            model_name='song',
-            name='album',
+            model_name="song",
+            name="album",
             field=models.CharField(blank=True, max_length=255, null=True),
         ),
         migrations.AlterField(
-            model_name='song',
-            name='cover_art_url',
-            field=models.URLField(blank=True, default='https://placehold.co/220'),
+            model_name="song",
+            name="cover_art_url",
+            field=models.URLField(blank=True, default="https://placehold.co/220"),
         ),
     ]

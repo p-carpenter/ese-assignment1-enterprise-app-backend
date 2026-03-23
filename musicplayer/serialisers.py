@@ -43,6 +43,23 @@ class SongSerialiser(serializers.ModelSerializer):
                 )
         return value
 
+    def validate_file_url(self, value):
+        allowed_domain = "https://res.cloudinary.com/mkmtszfb"
+        if not value.startswith(allowed_domain):
+            raise serializers.ValidationError(
+                f"file_url must strictly be hosted on the Cloudinary domain ({allowed_domain})."
+            )
+        return value
+
+    def validate_cover_art_url(self, value):
+        allowed_domain = "https://res.cloudinary.com/mkmtszfb"
+        if value and not value.startswith(allowed_domain):
+            if value != "https://placehold.co/220":
+                raise serializers.ValidationError(
+                    f"cover_art_url must strictly be hosted on the Cloudinary domain ({allowed_domain})."
+                )
+        return value
+
 
 class PlaylistSongSerialiser(serializers.ModelSerializer):
     song = SongSerialiser(read_only=True)
@@ -55,13 +72,6 @@ class PlaylistSongSerialiser(serializers.ModelSerializer):
         model = PlaylistSong
         fields = ["id", "song", "song_id", "order", "added_by", "added_at"]
         read_only_fields = ["added_by", "added_at"]
-
-    def validate_order(self, value):
-        if value < 0:
-            raise serializers.ValidationError(
-                "The order must be a non-negative integer."
-            )
-        return value
 
 
 class PlaylistSerialiser(serializers.ModelSerializer):

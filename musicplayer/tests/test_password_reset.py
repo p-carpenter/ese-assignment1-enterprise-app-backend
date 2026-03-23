@@ -12,7 +12,6 @@ class PasswordResetTests(APITestCase):
     """Test suite for password reset functionality"""
 
     def setUp(self):
-        """Create a test user for password reset tests"""
         self.user = User.objects.create_user(
             username="testuser",
             email="testuser@example.com",
@@ -22,18 +21,16 @@ class PasswordResetTests(APITestCase):
         self.reset_confirm_url = "rest_password_reset_confirm"
 
     def _get_uid_and_token(self, user):
-        """
-        Trigger the email and parse the uid/token from the email body."""
         outbox_count = len(mail.outbox)
 
         self.client.post(self.reset_url, {"email": user.email}, format="json")
 
         email_body = mail.outbox[-1].body
 
-        # Restore outbox
+        # Restore outbox.
         mail.outbox = mail.outbox[:outbox_count]
 
-        # Match standard uid and token format in URLs
+        # Match standard uid and token format in URLs.
         match = re.search(
             r"(?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})",
             email_body,
@@ -47,7 +44,6 @@ class PasswordResetTests(APITestCase):
         return match.group("uid"), match.group("token")
 
     def test_password_reset_request_with_valid_email(self):
-        """Test that a password reset email is sent when valid email is provided"""
         data = {"email": "testuser@example.com"}
         mail.outbox = []
 
@@ -62,7 +58,6 @@ class PasswordResetTests(APITestCase):
         self.assertIn("password reset", sent_email.subject.lower())
 
     def test_password_reset_request_with_invalid_email(self):
-        """Test password reset with non-existent email"""
         data = {"email": "nonexistent@example.com"}
         mail.outbox = []
 
@@ -72,7 +67,6 @@ class PasswordResetTests(APITestCase):
         self.assertEqual(len(mail.outbox), 0)
 
     def test_password_reset_request_without_email(self):
-        """Test password reset without providing email"""
         data = {}
 
         response = self.client.post(self.reset_url, data, format="json")
@@ -80,7 +74,6 @@ class PasswordResetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_password_reset_confirm_with_valid_token(self):
-        """Test password reset confirmation with valid token"""
         uid, token = self._get_uid_and_token(self.user)
 
         data = {
@@ -94,9 +87,6 @@ class PasswordResetTests(APITestCase):
             reverse(self.reset_confirm_url), data, format="json"
         )
 
-        if response.status_code != status.HTTP_200_OK:
-            print(f"\nPassword Reset Confirm Error: {response.data}")
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("detail", response.data)
 
@@ -105,7 +95,6 @@ class PasswordResetTests(APITestCase):
         self.assertFalse(self.user.check_password("OldPassword123!"))
 
     def test_password_reset_confirm_with_mismatched_passwords(self):
-        """Test password reset confirmation with non-matching passwords"""
         uid, token = self._get_uid_and_token(self.user)
 
         data = {
@@ -128,7 +117,6 @@ class PasswordResetTests(APITestCase):
         self.assertTrue(self.user.check_password("OldPassword123!"))
 
     def test_password_reset_confirm_with_invalid_token(self):
-        """Test password reset confirmation with invalid token"""
         uid, _ = self._get_uid_and_token(self.user)
 
         data = {
@@ -148,7 +136,6 @@ class PasswordResetTests(APITestCase):
         self.assertTrue(self.user.check_password("OldPassword123!"))
 
     def test_password_reset_confirm_with_weak_password(self):
-        """Test password reset confirmation with weak password"""
         uid, token = self._get_uid_and_token(self.user)
 
         data = {
@@ -171,7 +158,6 @@ class PasswordResetTests(APITestCase):
         self.assertTrue(self.user.check_password("OldPassword123!"))
 
     def test_password_reset_token_becomes_invalid_after_use(self):
-        """Test that token cannot be reused after successful password reset"""
         uid, token = self._get_uid_and_token(self.user)
 
         data = {
@@ -203,7 +189,6 @@ class PasswordResetTests(APITestCase):
         self.assertFalse(self.user.check_password("AnotherPassword123!"))
 
     def test_password_reset_email_contains_reset_link(self):
-        """Test that password reset email contains a valid reset link"""
         data = {"email": "testuser@example.com"}
         mail.outbox = []
 
@@ -226,7 +211,6 @@ class PasswordResetTests(APITestCase):
         self.assertEqual(len(mail.outbox), 1)
 
     def test_full_password_reset_flow(self):
-        """Integration test: Complete password reset flow from request to confirmation"""
         mail.outbox = []
         reset_request_data = {"email": "testuser@example.com"}
         response = self.client.post(self.reset_url, reset_request_data, format="json")
@@ -234,7 +218,7 @@ class PasswordResetTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(mail.outbox), 1)
 
-        # Extract directly from the email just generated
+        # Extract directly from the email just generated.
         match = re.search(
             r"(?P<uid>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})",
             mail.outbox[0].body,
@@ -283,7 +267,6 @@ class PasswordResetTests(APITestCase):
         self.assertIn("reset-password/confirm", response.url)
 
     def test_multiple_password_reset_requests(self):
-        """Test that multiple password reset requests can be made"""
         mail.outbox = []
 
         data = {"email": "testuser@example.com"}
@@ -296,7 +279,6 @@ class PasswordResetTests(APITestCase):
         self.assertEqual(len(mail.outbox), 2)
 
     def test_password_reset_case_insensitive_email(self):
-        """Test password reset with different email casing"""
         mail.outbox = []
 
         data = {"email": "TESTUSER@EXAMPLE.COM"}
