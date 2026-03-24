@@ -2,23 +2,23 @@
 
 [Full report](https://htmlpreview.github.io/?https://github.com/p-carpenter/ese-assignment1-enterprise-app-backend/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
-| Name                         |    Stmts |     Miss |    Cover |   Missing |
-|----------------------------- | -------: | -------: | -------: | --------: |
-| musicplayer/admin.py         |        0 |        0 |     100% |           |
-| musicplayer/apps.py          |        3 |        0 |     100% |           |
-| musicplayer/models.py        |       36 |        0 |     100% |           |
-| musicplayer/permissions.py   |       17 |        0 |     100% |           |
-| musicplayer/serialisers.py   |       68 |        0 |     100% |           |
-| musicplayer/services.py      |       23 |        0 |     100% |           |
-| musicplayer/urls.py          |        8 |        0 |     100% |           |
-| musicplayer/views.py         |       84 |        0 |     100% |           |
-| musicplayer\_project/urls.py |        5 |        0 |     100% |           |
-| users/admin.py               |        7 |        0 |     100% |           |
-| users/apps.py                |        3 |        0 |     100% |           |
-| users/models.py              |        6 |        0 |     100% |           |
-| users/tests.py               |       20 |        0 |     100% |           |
-| users/views.py               |        0 |        0 |     100% |           |
-| **TOTAL**                    |  **280** |    **0** | **100%** |           |
+| Name                         |    Stmts |     Miss |   Cover |   Missing |
+|----------------------------- | -------: | -------: | ------: | --------: |
+| musicplayer/admin.py         |        0 |        0 |    100% |           |
+| musicplayer/apps.py          |        3 |        0 |    100% |           |
+| musicplayer/models.py        |       36 |        0 |    100% |           |
+| musicplayer/permissions.py   |       17 |        0 |    100% |           |
+| musicplayer/serialisers.py   |       69 |        1 |     99% |       123 |
+| musicplayer/services.py      |       23 |        0 |    100% |           |
+| musicplayer/urls.py          |        8 |        0 |    100% |           |
+| musicplayer/views.py         |       95 |        0 |    100% |           |
+| musicplayer\_project/urls.py |        5 |        0 |    100% |           |
+| users/admin.py               |        7 |        0 |    100% |           |
+| users/apps.py                |        3 |        0 |    100% |           |
+| users/models.py              |        6 |        0 |    100% |           |
+| users/tests.py               |       20 |        0 |    100% |           |
+| users/views.py               |        0 |        0 |    100% |           |
+| **TOTAL**                    |  **292** |    **1** | **99%** |           |
 
 
 ## Setup coverage badge
