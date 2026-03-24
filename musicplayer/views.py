@@ -5,11 +5,11 @@ from rest_framework import filters, viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.views.generic import RedirectView
+from rest_framework.views import APIView
 from django.conf import settings
 from django.db.models import Q
 from rest_framework.throttling import ScopedRateThrottle
 import cloudinary.utils
-from rest_framework.views import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
@@ -278,7 +278,7 @@ class EmailVerificationRedirectView(RedirectView):
         return f"{settings.FRONTEND_URL}/account-confirm-email/{kwargs['key']}"
 
 
-class CloudinarySignatureView(GenericAPIView):
+class CloudinarySignatureView(APIView):
     """View to generate a signature for Cloudinary uploads.
 
     This view is protected and requires authentication. It generates a SHA-1
