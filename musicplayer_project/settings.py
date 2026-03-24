@@ -137,6 +137,11 @@ USE_I18N = True
 
 USE_TZ = True
 
+CLOUDINARY_CLOUD_NAME = os.environ.get('CLOUDINARY_CLOUD_NAME')
+CLOUDINARY_API_KEY = os.environ.get('CLOUDINARY_API_KEY')
+CLOUDINARY_API_SECRET = os.environ.get('CLOUDINARY_API_SECRET')
+print("DEBUG - CLOUDINARY API KEY IS:", os.environ.get('CLOUDINARY_API_KEY'))
+print("DEBUG- CLOUDINARY NAME IS:", os.environ.get('CLOUDINARY_CLOUD_NAME'))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
