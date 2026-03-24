@@ -11,14 +11,14 @@
 | musicplayer/serialisers.py   |       69 |        1 |     99% |       123 |
 | musicplayer/services.py      |       23 |        0 |    100% |           |
 | musicplayer/urls.py          |        8 |        0 |    100% |           |
-| musicplayer/views.py         |       95 |        0 |    100% |           |
+| musicplayer/views.py         |      100 |        1 |     99% |       291 |
 | musicplayer\_project/urls.py |        5 |        0 |    100% |           |
 | users/admin.py               |        7 |        0 |    100% |           |
 | users/apps.py                |        3 |        0 |    100% |           |
 | users/models.py              |        6 |        0 |    100% |           |
 | users/tests.py               |       20 |        0 |    100% |           |
 | users/views.py               |        0 |        0 |    100% |           |
-| **TOTAL**                    |  **292** |    **1** | **99%** |           |
+| **TOTAL**                    |  **297** |    **2** | **99%** |           |
 
 
 ## Setup coverage badge
