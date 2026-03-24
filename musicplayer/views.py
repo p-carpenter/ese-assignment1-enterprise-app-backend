@@ -1,3 +1,4 @@
+import time
 import django_filters
 from rest_framework.exceptions import ValidationError
 from rest_framework import filters, viewsets, permissions, status
@@ -7,6 +8,9 @@ from django.views.generic import RedirectView
 from django.conf import settings
 from django.db.models import Q
 from rest_framework.throttling import ScopedRateThrottle
+import cloudinary.utils
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from musicplayer.services import add_song_to_playlist, remove_song_from_playlist
 from .permissions import IsOwnerOrReadOnly, IsOwnerOrCollaborator
@@ -253,3 +257,26 @@ class EmailVerificationRedirectView(RedirectView):
         """
 
         return f"{settings.FRONTEND_URL}/account-confirm-email/{kwargs['key']}"
+    
+class CloudinarySignatureView(APIView):
+    permission_classes = [IsAuthenticated] 
+
+    def get(self, request):
+        timestamp = int(time.time())
+        
+        params_to_sign = {
+            "timestamp": timestamp,
+            "folder": "prod"
+        }
+        
+        # Generate the SHA-1 signature using the backend secret.
+        signature = cloudinary.utils.api_sign_request(
+            params_to_sign,
+            settings.CLOUDINARY_API_SECRET
+        )
+        
+        return Response({
+            "signature": signature,
+            "timestamp": timestamp,
+            "api_key": settings.CLOUDINARY_API_KEY,
+        })
