@@ -20,6 +20,7 @@ from django.urls import path, include
 
 # from allauth.account.views import ConfirmEmailView
 from musicplayer.views import (
+    CloudinarySignatureView,
     PasswordResetConfirmRedirectView,
     EmailVerificationRedirectView,
 )
@@ -43,4 +44,5 @@ urlpatterns = [
     ),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path('api/cloudinary/generate-signature/', CloudinarySignatureView.as_view(), name='cloudinary-signature'),
 ]
