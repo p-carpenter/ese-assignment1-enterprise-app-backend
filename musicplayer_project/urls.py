@@ -23,6 +23,7 @@ from musicplayer.views import (
     CloudinarySignatureView,
     PasswordResetConfirmRedirectView,
     EmailVerificationRedirectView,
+    set_csrf_token,
 )
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
@@ -49,4 +50,5 @@ urlpatterns = [
         CloudinarySignatureView.as_view(),
         name="cloudinary-signature",
     ),
+    path("api/csrf/", set_csrf_token, name="set-csrf-token"),
 ]

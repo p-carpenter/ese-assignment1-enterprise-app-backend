@@ -155,6 +155,12 @@ CORS_ALLOWED_ORIGINS = [
 deployed_frontend = os.environ.get("RENDER_FRONTEND_URL")
 if deployed_frontend:
     CORS_ALLOWED_ORIGINS.append(deployed_frontend)
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+if deployed_frontend:
+    CSRF_TRUSTED_ORIGINS.append(deployed_frontend)
 
 # For redirect after password reset
 FRONTEND_URL = os.environ.get("RENDER_FRONTEND_URL", "http://localhost:5173")
@@ -193,6 +199,9 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Short life for security
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),  # Long life for convenience
 }
+
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`

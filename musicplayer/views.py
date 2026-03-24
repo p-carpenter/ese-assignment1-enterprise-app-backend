@@ -11,6 +11,8 @@ from rest_framework.throttling import ScopedRateThrottle
 import cloudinary.utils
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
 
 from musicplayer.services import add_song_to_playlist, remove_song_from_playlist
 from .permissions import IsOwnerOrReadOnly, IsOwnerOrCollaborator
@@ -279,3 +281,11 @@ class CloudinarySignatureView(APIView):
                 "api_key": settings.CLOUDINARY_API_KEY,
             }
         )
+
+
+@ensure_csrf_cookie
+def set_csrf_token(request):
+    """
+    Endpoint for the React SPA to request a CSRF cookie.
+    """
+    return JsonResponse({"detail": "CSRF cookie set successfully"})
