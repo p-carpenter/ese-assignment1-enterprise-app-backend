@@ -9,7 +9,7 @@ from django.conf import settings
 from django.db.models import Q
 from rest_framework.throttling import ScopedRateThrottle
 import cloudinary.utils
-from rest_framework.views import APIView
+from rest_framework.views import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.http import JsonResponse
@@ -234,6 +234,15 @@ class PlayLogViewSet(viewsets.ModelViewSet):
 
 # Custom Redirect View for Password Reset Confirmation.
 class PasswordResetConfirmRedirectView(RedirectView):
+    """Redirect view to handle password reset confirmation links.
+
+    This view is used in the password reset workflow to redirect users to the
+    frontend application with the necessary parameters for confirming their password reset.
+
+    Attributes:
+        permanent (bool): Whether the redirect is permanent (HTTP 302).
+    """
+
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
@@ -249,6 +258,14 @@ class PasswordResetConfirmRedirectView(RedirectView):
 
 # Custom Redirect View for Email Verification Confirmation.
 class EmailVerificationRedirectView(RedirectView):
+    """Redirect view to handle email verification confirmation links.
+
+    This view is used in the email verification workflow to redirect users to the
+    frontend application with the necessary parameters for confirming their email address.
+    Attributes:
+    permanent (bool): Whether the redirect is permanent (HTTP 302).
+    """
+
     permanent = False
 
     def get_redirect_url(self, *args, **kwargs):
@@ -261,7 +278,17 @@ class EmailVerificationRedirectView(RedirectView):
         return f"{settings.FRONTEND_URL}/account-confirm-email/{kwargs['key']}"
 
 
-class CloudinarySignatureView(APIView):
+class CloudinarySignatureView(GenericAPIView):
+    """View to generate a signature for Cloudinary uploads.
+
+    This view is protected and requires authentication. It generates a SHA-1
+    signature using the Cloudinary API secret and returns it along with the
+    API key and timestamp for the frontend to use in direct uploads to Cloudinary.
+
+    Attributes:
+        permission_classes: Permissions controlling access to this endpoint.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -287,5 +314,11 @@ class CloudinarySignatureView(APIView):
 def set_csrf_token(request):
     """
     Endpoint for the React SPA to request a CSRF cookie.
+
+    Args:
+        request: The incoming HTTP request.
+
+    Returns:
+        JsonResponse: A simple JSON response indicating the CSRF cookie has been set.
     """
     return JsonResponse({"detail": "CSRF cookie set successfully"})
