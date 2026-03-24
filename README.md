@@ -11,7 +11,7 @@
 | musicplayer/serialisers.py   |       69 |        1 |     99% |       123 |
 | musicplayer/services.py      |       23 |        0 |    100% |           |
 | musicplayer/urls.py          |        8 |        0 |    100% |           |
-| musicplayer/views.py         |      100 |        1 |     99% |       291 |
+| musicplayer/views.py         |      100 |        1 |     99% |       324 |
 | musicplayer\_project/urls.py |        5 |        0 |    100% |           |
 | users/admin.py               |        7 |        0 |    100% |           |
 | users/apps.py                |        3 |        0 |    100% |           |
