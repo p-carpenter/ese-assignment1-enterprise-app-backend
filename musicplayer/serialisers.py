@@ -101,7 +101,9 @@ class SongSerialiser(serializers.ModelSerializer):
         """
 
         if not value.startswith("https://res.cloudinary.com/"):
-            raise serializers.ValidationError("file_url must be a secure Cloudinary url.")
+            raise serializers.ValidationError(
+                "file_url must be a secure Cloudinary url."
+            )
         return value
 
     def validate_cover_art_url(self, value):
@@ -117,9 +119,16 @@ class SongSerialiser(serializers.ModelSerializer):
             serializers.ValidationError: If URL is not on the allowed domain.
         """
 
-        if value and value != "https://placehold.co/220":
-            if not value.startswith("https://res.cloudinary.com/"):
-                raise serializers.ValidationError("cover_art_url must be a secure Cloudinary url.")
+        if not value:
+            return "https://placehold.co/220"
+
+        if value != "https://placehold.co/220" and not value.startswith(
+            "https://res.cloudinary.com/"
+        ):
+            raise serializers.ValidationError(
+                "cover_art_url must be a secure Cloudinary url."
+            )
+
         return value
 
 
