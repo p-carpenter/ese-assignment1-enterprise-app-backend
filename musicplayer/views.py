@@ -257,26 +257,25 @@ class EmailVerificationRedirectView(RedirectView):
         """
 
         return f"{settings.FRONTEND_URL}/account-confirm-email/{kwargs['key']}"
-    
+
+
 class CloudinarySignatureView(APIView):
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         timestamp = int(time.time())
-        
-        params_to_sign = {
-            "timestamp": timestamp,
-            "folder": "prod"
-        }
-        
+
+        params_to_sign = {"timestamp": timestamp, "folder": "prod"}
+
         # Generate the SHA-1 signature using the backend secret.
         signature = cloudinary.utils.api_sign_request(
-            params_to_sign,
-            settings.CLOUDINARY_API_SECRET
+            params_to_sign, settings.CLOUDINARY_API_SECRET
         )
-        
-        return Response({
-            "signature": signature,
-            "timestamp": timestamp,
-            "api_key": settings.CLOUDINARY_API_KEY,
-        })
+
+        return Response(
+            {
+                "signature": signature,
+                "timestamp": timestamp,
+                "api_key": settings.CLOUDINARY_API_KEY,
+            }
+        )
