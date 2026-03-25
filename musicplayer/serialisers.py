@@ -88,7 +88,7 @@ class SongSerialiser(serializers.ModelSerializer):
         return value
 
     def validate_file_url(self, value):
-        """Ensure the `file_url` is hosted on the configured Cloudinary domain.
+        """Ensure the `file_url` is hosted on the configured Cloudinary or Jamendo domain.
 
         Args:
             value (str): The URL to validate.
@@ -100,9 +100,9 @@ class SongSerialiser(serializers.ModelSerializer):
             serializers.ValidationError: If URL is not on the allowed domain.
         """
 
-        if not value.startswith("https://res.cloudinary.com/"):
+        if not value.startswith("https://res.cloudinary.com/") and not value.startswith("https://api.jamendo.com/"):
             raise serializers.ValidationError(
-                "file_url must be a secure Cloudinary url."
+                "Must be a secure Cloudinary or Jamendo url."
             )
         return value
 
@@ -126,7 +126,7 @@ class SongSerialiser(serializers.ModelSerializer):
             "https://res.cloudinary.com/"
         ):
             raise serializers.ValidationError(
-                "cover_art_url must be a secure Cloudinary url."
+                "Must be a secure Cloudinary url."
             )
 
         return value
