@@ -57,6 +57,17 @@ class SongSerializerTests(TestCase):
         self.assertFalse(serializer.is_valid())
         self.assertIn("cover_art_url", serializer.errors)
 
+    def test_file_url_validation(self):
+        serializer = SongSerialiser(
+            data={
+                "title": "test",
+                "duration": 100,
+                "file_url": "https://imgur.com/bad.mp3",
+            }
+        )
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("file_url", serializer.errors)
+
     def test_valid_data(self):
         data = {
             "title": "Valid Song",

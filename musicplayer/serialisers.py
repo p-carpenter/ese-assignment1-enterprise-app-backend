@@ -99,9 +99,9 @@ class SongSerialiser(serializers.ModelSerializer):
         Raises:
             serializers.ValidationError: If URL is not on the allowed domain.
         """
-
-        if not value.startswith("https://res.cloudinary.com/") and not value.startswith(
-            "https://api.jamendo.com/"
+        if (
+            not value.startswith("https://res.cloudinary.com/")
+            and "jamendo.com" not in value
         ):
             raise serializers.ValidationError(
                 "Must be a secure Cloudinary or Jamendo url."
@@ -120,14 +120,17 @@ class SongSerialiser(serializers.ModelSerializer):
         Raises:
             serializers.ValidationError: If URL is not on the allowed domain.
         """
-
         if not value:
             return "https://placehold.co/220"
 
-        if value != "https://placehold.co/220" and not value.startswith(
-            "https://res.cloudinary.com/"
+        if (
+            value != "https://placehold.co/220"
+            and not value.startswith("https://res.cloudinary.com/")
+            and "jamendo.com" not in value
         ):
-            raise serializers.ValidationError("Must be a secure Cloudinary url.")
+            raise serializers.ValidationError(
+                "Must be a secure Cloudinary or Jamendo url."
+            )
 
         return value
 
