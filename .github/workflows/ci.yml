@@ -63,6 +63,7 @@ jobs:
 
   build:
     needs: [code-quality, tests]
+    # Demo of CI/CD Pipeline
     runs-on: ubuntu-latest
     steps:
       - name: 'Deploy to production'
