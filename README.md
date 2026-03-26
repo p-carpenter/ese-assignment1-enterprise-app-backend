@@ -1,4 +1,4 @@
-# Enterprise Audio Application Backend
+# AdaStream: Enterprise Audio Application Backend
 
 A robust, secure, and scalable RESTful API built with Django 6 and Django REST Framework (DRF). This backend serves as the core data layer for the Enterprise Audio Application, handling complex relational data, secure authentication, and high-concurrency playlist management.
 
