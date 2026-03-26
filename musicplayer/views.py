@@ -88,12 +88,12 @@ class SongViewSet(viewsets.ModelViewSet):
     def get_throttles(self):
         """Return throttles used for the current action.
 
-        Only throttle uploads (create action) with the `song_upload` scope.
+        Only throttle uploads (create action) with the `add_to_library` scope.
         """
 
         # Only throttle the creation of new songs.
         if self.action == "create":
-            self.throttle_scope = "song_upload"
+            self.throttle_scope = "add_to_library"
             return [ScopedRateThrottle()]
         # Fall back to default global throttles for browsing.
         return super().get_throttles()

@@ -164,8 +164,8 @@ Because this is a headless API interacting with a SPA frontend, password resets 
 
 ## 4. Granular Request Throttling
 
-To prevent abuse, the API relies on DRF's `ScopedRateThrottle`. While browsing is given a generous allowance (1000/day for authenticated users), specific actions have strict custom scopes defined in `settings.py`:
+To prevent abuse, the API relies on DRF's `ScopedRateThrottle`. While browsing is given a generous allowance (10000/day for authenticated users), specific actions have strict custom scopes defined in `settings.py`:
 
-- `playlog_spam`: 5 per minute (prevents bots from artificially inflating play counts).
+- `playlog_spam`: 20 per minute (prevents bots from artificially inflating play counts while allowing users to skip through songs quickly).
     
-- `song_upload`: 10 per hour (mitigates storage abuse).
+- `add_to_library`: 60 per minute (mitigates storage abuse and network request overload, while understanding users may add multiple songs quickly via the Jamendo API).

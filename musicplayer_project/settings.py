@@ -178,10 +178,10 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "100/day",
-        "user": "1000/day",
-        "playlog_spam": "5/minute",
-        "song_upload": "10/hour",
+        "anon": "1000/day", 
+        "user": "10000/day",
+        "playlog_spam": "20/minute",
+        "add_to_library": "60/minute",
     },
 }
 
