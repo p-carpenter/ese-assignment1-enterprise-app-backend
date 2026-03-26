@@ -178,7 +178,7 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "1000/day", 
+        "anon": "1000/day",
         "user": "10000/day",
         "playlog_spam": "20/minute",
         "add_to_library": "60/minute",

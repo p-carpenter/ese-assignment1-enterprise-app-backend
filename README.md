@@ -2,170 +2,301 @@
 
 A robust, secure, and scalable RESTful API built with Django 6 and Django REST Framework (DRF). This backend serves as the core data layer for the Enterprise Audio Application, handling complex relational data, secure authentication, and high-concurrency playlist management.
 
+---
+
 ## Features
 
-## 🔐 Secure Authentication & Authorisation
+### 🔐 Secure Authentication & Authorisation
 
-- **HTTP-Only JWTs**: Authentication uses JSON Web Tokens stored securely in HTTP-only cookies via `dj-rest-auth`, mitigating XSS attack vectors.
-    
-- **Complete Auth Flow**: Full support for registration, mandatory email verification (via SendGrid), login, and password resets (via SendGrid).
-    
-- **Granular Permissions**: Custom permission classes (`IsOwnerOrReadOnly`, `IsOwnerOrCollaborator`) ensure users can only modify their own content or collaborative playlists.
-    
+- **HTTP-Only JWTs**  
+  Authentication uses JSON Web Tokens stored securely in HTTP-only cookies via `dj-rest-auth`, mitigating XSS attack vectors.
 
-## 🗂️ Advanced Content Management
+- **Complete Auth Flow**  
+  Full support for registration, mandatory email verification (via SendGrid), login, and password resets (via Sendgrid).
 
-- **Concurrency-Safe Playlists**: Adding songs to playlists uses database-level locking (`select_for_update`) to prevent race conditions when calculating track order.
-    
-- **Collaborative Playlists**: Support for public and collaborative playlists where multiple users can contribute simultaneously.
-    
-- **Play Tracking**: Dedicated, rate-limited endpoints for logging user listening history.
-    
+- **Granular Permissions**  
+  Custom permission classes (`IsOwnerOrReadOnly`, `IsOwnerOrCollaborator`) ensure users can only modify their own content or collaborative playlists (to add songs).
 
-## 🛡️ Security & API Reliability
+---
 
-- **Scoped Rate Limiting**: Intelligent throttling protects critical endpoints (5 requests/minute for play logs, 10/hour for song uploads) to prevent abuse and spam.
-    
-- **Automated API Documentation**: OpenAPI schema generation provided out-of-the-box via `drf-spectacular`.
-    
-- **CORS Configuration**: Strictly configured cross-origin resource sharing to only allow requests from the authenticated frontend application.
-    
+### 🗂️ Advanced Content Management
+
+- **Concurrency-Safe Playlists**  
+  Adding songs to playlists uses database-level locking (`select_for_update`) to prevent race conditions when calculating track order.
+
+- **Collaborative Playlists**  
+  Support for public and collaborative playlists where multiple users can contribute simultaneously.
+
+- **Play Tracking**  
+  Dedicated, rate-limited endpoints for logging user listening history.
+
+---
+
+### 🛡️ Security & API Reliability
+
+- **Scoped Rate Limiting**  
+  Throttling protects critical endpoints:
+  - `20 requests/minute` for play logs
+  - `60 requests/minute` for library additions
+
+- **Automated API Documentation**  
+  OpenAPI schema generation and interactive Swagger UI provided via `drf-spectacular`.
+
+- **CORS Configuration**  
+  Strict cross-origin resource sharing configuration allowing requests only from the authenticated frontend application.
+
+---
 
 ## Technology Stack
 
-- **Core Framework**: Python 3.14, Django 6.0, Django REST Framework (DRF)
-    
-- **Authentication**: dj-rest-auth, django-allauth, djangorestframework-simplejwt
-    
-- **Database**: SQLite (Development) / PostgreSQL (Production ready via `psycopg` and `dj-database-url`)
-    
-- **Email Delivery**: django-anymail (SendGrid)
-    
-- **Code Quality**: Ruff (Linting & Formatting), Coverage
-    
-- **Package Management**: uv (via `pyproject.toml` and `uv.lock`)
-    
+| Area | Technology |
+|------|------------|
+| Core Framework | Python 3.14, Django 6.0, Django REST Framework |
+| Authentication | dj-rest-auth, django-allauth, djangorestframework-simplejwt |
+| Database | SQLite (Development), PostgreSQL (Production via `psycopg`, `dj-database-url`) |
+| Media Storage | Cloudinary (Direct frontend uploads via backend signatures) |
+| Email Delivery | django-anymail (SendGrid) |
+| Code Quality | Ruff (Linting & Formatting), Coverage (Testing) |
+| Package Management | uv (`pyproject.toml`, `uv.lock`) |
 
-## Installation & Setup
+---
 
-## Prerequisites
+## Setup & Installation
+
+### Prerequisites
 
 - Python 3.14+
-    
-- `uv` (recommended for dependency management) or `pip`
-    
+- `uv` (recommended) or `pip`
 - PostgreSQL (optional, for production parity)
-    
 
-## Setup Instructions
+---
 
-1. **Clone the repository**
-    
-    Bash
-    
-    ```
-    git clone <repository-url>
-    cd ese-assignment1-enterprise-app-backend
-    ```
-    
-2. **Set up the environment & install dependencies** Using `uv`:
-    
-    Bash
-    
-    ```
-    uv sync
-    source .venv/bin/activate
-    ```
-    
-    _Alternatively, using standard pip:_
-    
-    Bash
-    
-    ```
-    python -m venv .venv
-    source .venv/bin/activate
-    pip install -e .
-    ```
-    
-3. **Configure Environment Variables** Create a `.env` file in the root directory based on your local setup:
-    
-    Code snippet
-    
-    ```
-    SECRET_KEY=your_super_secret_django_key
-    DEBUG=True
-    RENDER_FRONTEND_URL=http://localhost:5173
-    SENDGRID_API_KEY=your_sendgrid_key_here
-    # DATABASE_URL=postgres://user:pass@localhost:5432/dbname # Uncomment for Postgres
-    ```
-    
-4. **Initialise the Database**
-    
-    Bash
-    
-    ```
-    python manage.py migrate
-    ```
-    
-5. **Run the Development Server**
-    
-    Bash
-    
-    ```
-    python manage.py runserver
-    ```
-    
-    The API will be available at `http://127.0.0.1:8000`.
-    
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd ese-assignment1-enterprise-app-backend
+```
+
+---
+
+### 2. Install Dependencies
+
+#### Using `uv`
+
+```bash
+uv sync
+source .venv/bin/activate
+```
+
+#### Using `pip`
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+---
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+SECRET_KEY=your_super_secret_django_key
+DEBUG=True
+RENDER_FRONTEND_URL=http://localhost:5173
+
+SENDGRID_API_KEY=your_sendgrid_key_here
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+---
+
+### 4. Initialise the Database
+
+```bash
+python manage.py migrate
+```
+
+---
+
+### 5. Run the Development Server
+
+```bash
+python manage.py runserver
+```
+
+The API will be available at:
+
+```
+http://127.0.0.1:8000
+```
+
+---
+
+## Application Usage
+
+### Interactive API Documentation (Swagger UI)
+
+Navigate to:
+
+```
+http://127.0.0.1:8000/
+```
+
+You can explore endpoints, payload structures, and execute requests directly from the browser.
+
+Raw OpenAPI schema:
+
+```
+/api/schema/
+```
+
+---
+
+## Testing & Tooling
+
+### Run Tests with Coverage
+
+```bash
+coverage run manage.py test
+coverage report
+```
+
+### Linting & Formatting
+
+```bash
+ruff check .
+ruff format .
+```
+
+---
 
 ## Architecture and Layering
 
-The application moves beyond basic Django CRUD by implementing a **Service Layer Architecture** to handle complex business logic separately from HTTP request/response handling.
+The application implements a **Service Layer Architecture** to separate business logic from HTTP request handling.
 
-## Directory Structure
+---
 
-Plaintext
+### Directory Structure
 
 ```
 backend/
-├── musicplayer/            # Main application logic
-│   ├── admin.py            # Django admin configurations
-│   ├── models.py           # Database schemas (Song, Playlist, PlayLog)
-│   ├── permissions.py      # Custom DRF permission classes
-│   ├── serialisers.py      # Data validation and object serialisation
-│   ├── services.py         # Isolated business logic and DB transactions
-│   ├── urls.py             # App-specific routing
-│   └── views.py            # DRF ViewSets and request orchestration
-├── musicplayer_project/    # Core project settings and configurations
-│   ├── settings.py         # Environment, Auth, and Throttling config
-│   └── urls.py             # Root URL routing
-├── users/                  # Custom User model and auth extensions
-├── pyproject.toml          # Modern Python dependency definition
-└── ruff.toml               # Linter and formatter configuration
+├── musicplayer/
+│   ├── admin.py
+│   ├── models.py
+│   ├── permissions.py
+│   ├── serialisers.py
+│   ├── services.py
+│   ├── tests/
+│   ├── urls.py
+│   └── views.py
+│
+├── musicplayer_project/
+│   ├── settings.py
+│   └── urls.py
+│
+├── users/
+├── pyproject.toml
+└── ruff.toml
 ```
+
+---
 
 ## Key Technical Decisions
 
-## 1. Service Layer for Complex Transactions (`services.py`)
+### 1. Direct-to-Cloud Media Uploads
 
-Rather than placing complex database logic inside DRF ViewSets or overriding model `save()` methods, critical operations are abstracted into `services.py`.
+Routing large audio files through Django would consume server bandwidth and block worker threads.
 
-- **Example**: `add_song_to_playlist` uses `@transaction.atomic` and `Playlist.objects.select_for_update()`. This explicit row-level database lock ensures that if multiple users add a song to a collaborative playlist at the exact same millisecond, the application will not assign them the same `order` index.
+**Solution:**  
+The backend implements a `CloudinarySignatureView`. The API generates a SHA-1 cryptographic signature, allowing the frontend to upload files directly to Cloudinary without proxying the file through Django.
 
-## 2. JWTs via HTTP-Only Cookies
+---
 
-To maximise security against Cross-Site Scripting (XSS) attacks, the application uses `dj-rest-auth` configured to issue JWTs as HTTP-Only, Secure, SameSite=None cookies (`JWT_AUTH_COOKIE` and `JWT_AUTH_REFRESH_COOKIE`). The frontend never has direct JavaScript access to the access tokens.
+### 2. Service Layer for Complex Transactions (`services.py`)
 
-## 3. Decoupled Email Workflows
+Complex database operations are abstracted into a dedicated service layer instead of being embedded inside ViewSets or model methods.
 
-Because this is a headless API interacting with a SPA frontend, password resets and email verification links sent to users cannot point directly back to standard Django templates.
+Example:
 
-- **Solution**: The backend implements custom `RedirectView` classes (`PasswordResetConfirmRedirectView` and `EmailVerificationRedirectView`). The email links point to the API, which instantly parses the tokens and issues a 302 Redirect to the correct frontend React Router path, maintaining a seamless user experience.
+- `add_song_to_playlist` uses `@transaction.atomic`
+- `Playlist.objects.select_for_update()`
 
-## 4. Granular Request Throttling
+This row-level lock ensures that concurrent requests cannot assign duplicate track order indexes.
 
-To prevent abuse, the API relies on DRF's `ScopedRateThrottle`. While browsing is given a generous allowance (10000/day for authenticated users), specific actions have strict custom scopes defined in `settings.py`:
+---
 
-- `playlog_spam`: 20 per minute (prevents bots from artificially inflating play counts while allowing users to skip through songs quickly).
-    
-- `add_to_library`: 60 per minute (mitigates storage abuse and network request overload, while understanding users may add multiple songs quickly via the Jamendo API).
+### 3. JWTs via HTTP-Only Cookies
+
+To maximise protection against XSS attacks, authentication uses:
+
+```
+JWT_AUTH_COOKIE
+JWT_AUTH_REFRESH_COOKIE
+```
+
+Cookies are configured with:
+
+- HttpOnly
+- Secure
+- SameSite=None
+
+A dedicated endpoint:
+
+```
+/api/csrf/
+```
+
+ensures state-changing requests remain protected against CSRF.
+
+---
+
+### 4. Decoupled Email Workflows
+
+Because this is a headless API interacting with a SPA frontend, email verification and password reset links cannot point to traditional Django templates.
+
+**Solution:**
+
+Custom redirect views:
+
+- `PasswordResetConfirmRedirectView`
+- `EmailVerificationRedirectView`
+
+These endpoints parse tokens and immediately issue a `302 redirect` to the appropriate frontend route handled by React Router.
+
+---
+
+### 5. Custom Pagination & Filtering
+
+All collection endpoints use custom pagination classes:
+
+- `SongPagination`
+- `PlayLogPagination`
+
+`django-filter` integration allows filtering and sorting via query parameters without requiring custom ORM queries for each combination.
+
+---
+
+### 6. Granular Request Throttling
+
+The API uses DRF's `ScopedRateThrottle`.
+
+Default browsing allowance:
+
+```
+10000/day per authenticated user
+1000/day per unauthenticated user (register, login, password reset)
+```
+
+Custom scopes:
+
+| Scope | Limit | Purpose |
+|------|------|---------|
+| playlog_spam | 20/minute | Prevent artificial play inflation |
+| add_to_library | 60/minute | Prevent storage abuse |
